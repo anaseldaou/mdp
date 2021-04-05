@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 
 
-import { Button,
-          Form, 
-          FormGroup, 
-          Input, 
-          Label,
-          Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { 
+    Button, Modal, ModalHeader, ModalBody,
+    Form, FormGroup, Input, Label } from 'reactstrap';
+
+import { baseUrl } from '../shared/baseUrl';
 
 class SignIn extends Component{
     constructor(props) {
@@ -30,11 +29,10 @@ class SignIn extends Component{
 
 
       handleLogin(event) {
+        console.log("HI");
         this.toggleModal();
-        event.preventDefault();
         this.props.loginUser({username: this.username.value, password: this.password.value});
-        
-        
+        event.preventDefault();
     }
 
     handleLogout() {

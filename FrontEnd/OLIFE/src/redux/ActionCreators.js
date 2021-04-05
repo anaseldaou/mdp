@@ -24,7 +24,8 @@ export const loginError = (message) => {
 }
 export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
-    dispatch(requestLogin(creds))
+
+    dispatch(requestLogin(creds));
 
     return fetch(baseUrl+'users/login' , {
         method: 'POST',
