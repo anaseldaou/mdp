@@ -32,17 +32,47 @@ const ParameterSchema = new Schema(
             required:true
         }
         ,
+        hour:
+        {
+            type:String,
+            required:true
+        }
+        ,
+        day:
+        {
+            type:String,
+            required:true
+        }
+        ,
+        week:
+        {
+            type:String,
+            required:true
+        }
+        ,
+        month:
+        {
+            type:String,
+            required:true
+        }
+        ,
+        year:
+        {
+            type:String,
+            required:true
+        }
+        ,
         Charge_batterie_interne:
         {
             type:Parameter,
-            required: true,
+            required: false,
             default : null
         }
         ,
         Charge_batterie_externe: 
         {
             type:Parameter,
-            required: true,
+            required: false,
             default : null
         },/*
         ,

@@ -3,11 +3,18 @@ const bodyParser = require('body-parser');
 const Device = require('../models/Devices');
 const Parameter = require('../models/Parameters');
 
+const getWeek = (day) =>
+{
+    return ( Math.floor(day/7) > 4 )  ? 4 : Math.floor(day/7)+1;
+}
+
 const ParameterRouter = express.Router();
 
 var last_Date = new Date();
 var last_day = last_Date.getDate();
 var last_hour = last_Date.getHours();
+var last_month = last_Date.getMonth();
+var last_year = last_Date.getFullYear();
 
 
 var last_pluie_cumule_pour_jour = 0;
@@ -27,14 +34,6 @@ ParameterRouter.route('/')
     .catch((err) => next(err));
 })
 .post((req, res, next) => {
-    //Pluie_cumulée_sur_la_dernière_heure:
-    //Pluie_cumulée_sur_les_dernières_24h:
-
-
-   // var last_Inserted_document_timestamp = Para.find().sort({ '_id': -1 }).limit(1).forEach(
-     //   function(doc){
-       //     print("record:"+doc._id.getTimestamp());
-   //})
 
    if ( new Date().getDate() == last_day)
    {
@@ -58,66 +57,100 @@ ParameterRouter.route('/')
         console.log("false");
      }
 
-
      req.body.Pluie_cumulee_sur_la_derniere_heure = last_pluie_cumule_pour_heure;
      req.body.Pluie_cumulee_sur_les_dernieres_24h = last_pluie_cumule_pour_jour;
-     
-     
+
+     req.body.hour=last_hour;
+     req.body.day=last_day;
+     req.body.week=getWeek(last_day);
+     req.body.month=last_month;
+     req.body.year=last_year;
+    
     Parameter.create(req.body)
-    .then((Parametertion) => {
-        //console.log('Parameter Created ', Parametertion);
+    .then((parameter) => {
         res.setHeader('Content-Type', 'application/json');
-        res.json(Parametertion);
+        res.json(parameter);
     }, (err) => next(err))
     .catch((err) => next(err));
-})
-.put((req, res, next) => {
-    res.statusCode = 403;
-    res.end('PUT operation not supported on /Parametert');
-})
-.delete((req, res, next) => {
-    Parameter.remove({})
-    .then((resp) => {
-        
-        res.setHeader('Content-Type', 'application/json');
-        res.json(resp);
-    }, (err) => next(err))
-    .catch((err) => next(err));    
 });
 
-ParameterRouter.route('/:ParameterId')
+ParameterRouter.route('/Pluie_instantanee/:echelle')
 .get((req,res,next) => {
-    Parameter.findById(req.params.ParameterId)
-    .then((Parametertion) => {
-        
+    /*Parameter.find({}, { Pluie_instantanee: 1 , _id : 0})
+    .then(response => {
         res.setHeader('Content-Type', 'application/json');
-        res.json(Parameter);
+        var response = response.map(doc => doc.Pluie_instantanee);
+        var max = Math.max.apply(Math, response);
+        var min = Math.min.apply(Math, response);
+        res.json(
+            {
+            data:response,
+            max:max,
+            min:min
+            }
+            );
     }, (err) => next(err))
-    .catch((err) => next(err));
-})
-.post((req, res, next) => {
-    res.statusCode = 403;
-    res.end('POST operation not supported on /Parameter/'+ req.params.ParameterId);
-})
-.put((req, res, next) => {
-    Parameter.findByIdAndUpdate(req.params.ParameterId, {
-        $set: req.body
-    }, { new: true })
-    .then((dish) => {
-        
-        res.setHeader('Content-Type', 'application/json');
-        res.json(Parameter);
-    }, (err) => next(err))
-    .catch((err) => next(err));
-})
-.delete((req, res, next) => {
-    Parameter.findByIdAndRemove(req.params.ParameterId)
-    .then((resp) => {
-        
-        res.setHeader('Content-Type', 'application/json');
-        res.json(resp);
-    }, (err) => next(err))
-    .catch((err) => next(err));
+    .catch((err) => next(err));*/
+    switch(req.params.echelle){
+        case "perDay" :
+            Parameter.aggregate([{ $group : { 
+                _id : { year: { $year : "$createdAt" },
+                        month: { $month : "$createdAt" },
+                        week:{$week : "$createdAt"},
+                        day: { $dayOfMonth : "$createdAt" }}, 
+                avg : {$avg:"$Pluie_instantanee"}}
+            }
+            ])
+            .then(response => {
+                console.log(response.map(doc => doc._id));
+                res.setHeader('Content-Type', 'application/json');
+                res.json(response);
+            })
+            break;
+        case "perWeek" :
+            Parameter.aggregate([{ $group : { 
+                _id : { 
+                    year: { $year : "$createdAt" },
+                    week:{$week : "$createdAt"}},
+                avg : {$avg:"$Pluie_instantanee"}}
+            }
+            ])
+            .then(response => {
+                console.log(response.map(doc => doc._id));
+                res.setHeader('Content-Type', 'application/json');
+                res.json(response);
+            })
+            break;
+        case "perMonth" :
+            Parameter.aggregate([{ $group : { 
+                _id : { year: { $year : "$createdAt" },
+                        month: { $month : "$createdAt" }}, 
+                avg : {$avg:"$Pluie_instantanee"}}
+            }
+            ])
+            .then(response => {
+                console.log(response.map(doc => doc._id));
+                res.setHeader('Content-Type', 'application/json');
+                res.json(response);
+            })
+            break;
+        case "perYear" :
+            Parameter.aggregate([{ $group : { 
+                _id : { year: { $year : "$createdAt" }}, 
+                avg : {$avg:"$Pluie_instantanee"}}
+            }
+            ])
+            .then(response => {
+                console.log(response.map(doc => doc._id));
+                res.setHeader('Content-Type', 'application/json');
+                res.json(response);
+            })
+            break;
+        default :
+            res.setHeader('Content-Type','application/json');
+            next(err);
+    }
 });
+
 
 module.exports = ParameterRouter;

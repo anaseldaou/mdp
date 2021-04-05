@@ -23,6 +23,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 //app.use(auth);
+app.use(passport.initialize());
 app.use('/Devices',DeviceRouter);
 app.use('/parameter',parameterRouter);
 app.use('/users', usersRouter);
@@ -74,14 +75,14 @@ var mailOptions = {
   text: 'That was easy!'
 };
 console.log('3');
-
+/*
 transporter.sendMail(mailOptions, function(error, info){
   if (error) {
     console.log(error);
   } else {
     console.log('Email sent: ' + info.response);
   }
-});
+});*/
 
 console.log('4');
 
