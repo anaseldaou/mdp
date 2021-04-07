@@ -4,8 +4,9 @@ import TableCom from '../components/ChartComponents/TableComponent';
 import KnobCom from '../components/ChartComponents/KnobComponent';
 import {LineChart} from '../components/ChartComponents/LineChartComponent';
 import { BreadCrumb } from 'primereact/breadcrumb';
-
+import {basicData} from '../shared/pluvioData';
 import '../CSS/Home.css';
+import '../CSS/Dashboard.css';
 
 class Home extends Component {
   constructor(props){
@@ -37,6 +38,7 @@ class Home extends Component {
 
 
     //Bar Data
+    /*
     const basicData = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
@@ -54,7 +56,7 @@ class Home extends Component {
               fill:true
           }
       ]
-    };
+    };*/
 
 
 
