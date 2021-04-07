@@ -1,5 +1,5 @@
 import  {Component} from 'react';
-import '../CSS/About.css'
+import '../CSS/About.css';
 
 
 class About extends Component {
@@ -71,4 +71,4 @@ class About extends Component {
     )
   }
 }
-export default About
+export default About;

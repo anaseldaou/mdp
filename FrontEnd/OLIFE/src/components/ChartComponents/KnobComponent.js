@@ -13,19 +13,22 @@ class KnobCom extends Component {
   render(){
     return(
     <div>
-      <div className="card">
+
+        <div className="card-body">
+          <br></br>
         <div className="p-grid p-formgrid p-text-center center">
-        <h2>Gas Data</h2>
-          <div className="p-field p-col-4 p-md-4 ">
-            <h4>CO2</h4>
+        <h2><bold>Gas Data</bold></h2>
+        <br></br>
+          <div>
+            <h4><bold>CO2</bold></h4>
             <Knob value={42} valueTemplate={"{value}ppm"} readOnly />
           </div>
           <div>
-            <h4>SO2</h4>
+            <h4><bold>SO2</bold></h4>
             <Knob value={52} valueTemplate={"{value}ppm"} readOnly />
           </div>
-          <div className="p-field p-col-4 p-md-4">
-            <h4>NO2</h4>
+          <div>
+            <h4><bold>NO2</bold></h4>
             <Knob value={67} valueTemplate={"{value}ppm"} readOnly />
           </div>
         </div>

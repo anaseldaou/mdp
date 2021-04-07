@@ -1,12 +1,14 @@
-import { Component } from 'react';
+/*import { Component } from 'react';
 import { Chart } from 'primereact/chart';
 import TableCom from './ChartComponents/TableComponent';
 import KnobCom from './ChartComponents/KnobComponent';
 import LineChart from './ChartComponents/LineChartComponent';
 
+import {basicData} from './shared/pluvioData';
 class Home extends Component {
   constructor(props){
     super(props);
+
     this.state = {
       dataSets:[
         {
@@ -27,6 +29,7 @@ class Home extends Component {
 
   render(){
     //Bar Data
+    /*
     const basicData = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
@@ -150,7 +153,7 @@ class Home extends Component {
           <div class="col-md-3">
             <KnobCom />
           </div>
-            {/* <div className="card">
+            { <div className="card">
               <div className="card-body">
                   <Chart type="doughnut" data={chartData} options={lightOptions} />
                   <br></br>
@@ -158,7 +161,7 @@ class Home extends Component {
                                           Some quick example text to build on the card title and make up the bulk of the card's content.
                                           Some quick example text to build on the card title and make up the bulk of the card's content.My</p>
               </div>
-            </div> */}
+            </div> }
         </div>
         <div class="row">
 
@@ -202,4 +205,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Home;*/

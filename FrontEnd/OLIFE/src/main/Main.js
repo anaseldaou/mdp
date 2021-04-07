@@ -1,13 +1,12 @@
-/*import React, { Component } from "react";
+import React, { Component } from "react";
 
 
 import Home from '../pages/Home';
 import {Switch,Route,Redirect , withRouter } from 'react-router-dom';
-import About from './AboutComponent';
-import {about_data} from '../shared/aboutData';
-import Header from './HeaderComponent';
-import Footer from './FooterComponent';
-import SignIn from './SignInComponent'
+import About from '../pages/AboutUs';
+import Header from '../components/HeaderComponent';
+import Footer from '../components/FooterComponent';
+import SignIn from '../components/SignInComponent';
 
 import { connect} from 'react-redux';
 import { loginUser, logoutUser} from '../redux/ActionCreators';
@@ -36,9 +35,6 @@ class Main extends Component
     
   constructor(props){
     super(props);
-    this.state = {
-      //dashboards_data:dashboards,
-    };
   }
 
 
@@ -66,4 +62,4 @@ class Main extends Component
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));*/
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

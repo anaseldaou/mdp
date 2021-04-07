@@ -24,17 +24,19 @@ var last_pluie_cumule_pour_heure = 0;
 
 ParameterRouter.use(bodyParser.json());
 
+var  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
 ParameterRouter.route('/')
 .get((req,res,next) => {
     Parameter.find({})
-    .then((Parametertion) => {
+    .then((Parametert) => {
         res.setHeader('Content-Type', 'application/json');
-        res.json(Parametertion);
+        res.json(Parametert);
     }, (err) => next(err))
     .catch((err) => next(err));
 })
 .post((req, res, next) => {
-
+/*
    if ( new Date().getDate() == last_day)
    {
        last_pluie_cumule_pour_jour+=parseInt(req.body.Pluie_instantanee);
@@ -56,7 +58,7 @@ ParameterRouter.route('/')
         last_pluie_cumule_pour_heure = parseInt( req.body.Pluie_instantanee) ;
         console.log("false");
      }
-
+    
      req.body.Pluie_cumulee_sur_la_derniere_heure = last_pluie_cumule_pour_heure;
      req.body.Pluie_cumulee_sur_les_dernieres_24h = last_pluie_cumule_pour_jour;
 
@@ -65,7 +67,7 @@ ParameterRouter.route('/')
      req.body.week=getWeek(last_day);
      req.body.month=last_month;
      req.body.year=last_year;
-    
+    */
     Parameter.create(req.body)
     .then((parameter) => {
         res.setHeader('Content-Type', 'application/json');
@@ -74,7 +76,7 @@ ParameterRouter.route('/')
     .catch((err) => next(err));
 });
 
-ParameterRouter.route('/Pluie_instantanee/:echelle')
+ParameterRouter.route('/Pluvio/:echelle')
 .get((req,res,next) => {
     /*Parameter.find({}, { Pluie_instantanee: 1 , _id : 0})
     .then(response => {
@@ -94,11 +96,11 @@ ParameterRouter.route('/Pluie_instantanee/:echelle')
     switch(req.params.echelle){
         case "perDay" :
             Parameter.aggregate([{ $group : { 
-                _id : { year: { $year : "$createdAt" },
-                        month: { $month : "$createdAt" },
-                        week:{$week : "$createdAt"},
+                _id : { year: { $year : "$timestamp" },
+                        month: { $month : "$timestamp" },
+                        week:{$week : "$timestamp"},
                         day: { $dayOfMonth : "$createdAt" }}, 
-                avg : {$avg:"$Pluie_instantanee"}}
+                avg : {$avg:"$Pluvio"}}
             }
             ])
             .then(response => {
@@ -110,9 +112,9 @@ ParameterRouter.route('/Pluie_instantanee/:echelle')
         case "perWeek" :
             Parameter.aggregate([{ $group : { 
                 _id : { 
-                    year: { $year : "$createdAt" },
-                    week:{$week : "$createdAt"}},
-                avg : {$avg:"$Pluie_instantanee"}}
+                    year: { $year : "$timestamp" },
+                    week:{$week : "$timestamp"}},
+                avg : {$avg:"$Pluvio"}}
             }
             ])
             .then(response => {
@@ -123,21 +125,25 @@ ParameterRouter.route('/Pluie_instantanee/:echelle')
             break;
         case "perMonth" :
             Parameter.aggregate([{ $group : { 
-                _id : { year: { $year : "$createdAt" },
-                        month: { $month : "$createdAt" }}, 
-                avg : {$avg:"$Pluie_instantanee"}}
+                _id : { year: { $year : "$timestamp" },
+                        month: { $month : "$timestamp" }}, 
+                avg : {$avg:"$Pluvio"}}
             }
             ])
             .then(response => {
-                console.log(response.map(doc => doc._id));
                 res.setHeader('Content-Type', 'application/json');
-                res.json(response);
-            })
+                const resultat = response.map( doc =>  {
+                    return {
+                    month : months[doc._id.month],
+                    avg : doc.avg}
+                });
+                res.json(resultat);}
+                )
             break;
         case "perYear" :
             Parameter.aggregate([{ $group : { 
-                _id : { year: { $year : "$createdAt" }}, 
-                avg : {$avg:"$Pluie_instantanee"}}
+                _id : { year: { $year : "$timestamp" }}, 
+                avg : {$avg:"$Pluvio"}}
             }
             ])
             .then(response => {
@@ -149,8 +155,8 @@ ParameterRouter.route('/Pluie_instantanee/:echelle')
         default :
             res.setHeader('Content-Type','application/json');
             next(err);
-    }
-});
+            }})
+                
 
 
 module.exports = ParameterRouter;

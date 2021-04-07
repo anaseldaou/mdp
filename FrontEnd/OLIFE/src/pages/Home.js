@@ -1,8 +1,11 @@
 import { Component } from 'react';
 import { Chart } from 'primereact/chart';
-import TableCom from './ChartComponents/TableComponent';
-import KnobCom from './ChartComponents/KnobComponent';
-import LineChart from './ChartComponents/LineChartComponent';
+import TableCom from '../components/ChartComponents/TableComponent';
+import KnobCom from '../components/ChartComponents/KnobComponent';
+import {LineChart} from '../components/ChartComponents/LineChartComponent';
+import { BreadCrumb } from 'primereact/breadcrumb';
+
+import '../CSS/Home.css';
 
 class Home extends Component {
   constructor(props){
@@ -26,6 +29,13 @@ class Home extends Component {
   }
 
   render(){
+    //breadcrumb
+    const items = [
+      {label: 'Dashboard'},
+    ]
+    const home = { icon: 'pi pi-home', url: 'https://www.primefaces.org/primereact/showcase' }
+
+
     //Bar Data
     const basicData = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -102,53 +112,50 @@ class Home extends Component {
   };
 
     return(
+      <body>
       <div className="container">
+        <br></br>
         <div className="row">
-        <div className="col-4">
+        <div className="col-md-3 col-sm-6">
           <div className="row">
-        <div className="col-12">
-          <br></br>
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-subtitle mb-2">Temperature</h4>
-                <h3 className="card-title">26°C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/temperatureIcon.webp" width="25%"/></span></h3>
-                <a href="/temperature">Discover More</a>
-              </div>
-            </div>
-          </div>
-          <div className="col-12">
-          <div className="card">
-              <div className="card-body">
-                <h4 className="card-subtitle mb-2">Humidity</h4>
-                <h3 className="card-title">89%<span><img src="assets/images/temperatureIcon.webp" width="25%"/></span></h3>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-        <div class="col-md-8">
-            <div className="card">
+            <div className="col-sm-12 col-md-12">
+              <br></br>
+              <br></br>
                 <div className="card-body">
-                  <h5 className="card-subtitle mb-2">Temperature Today</h5>
-                  <Chart type="line" data={basicData} />
+                  <h2 className="card-subtitle mb-2"><bold>Temperature</bold></h2>
+                  <h1 className="card-title">26°C &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/temperatureIcon.webp" width="25%"/></span></h1>
+                  <a href="/temperature">Discover More</a>
                 </div>
             </div>
+            <div className="col-12">
+                  <br></br>
+                  <br></br>
+                  <div className="card-body">
+                    <h2 className="card-subtitle mb-2"><bold>Humidite</bold></h2>
+                    <h1 className="card-title">89%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/humidity-icon.png" width="25%"/></span></h1>
+                  </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9">
+                <div className="card-body">
+                  <h2 className="card-subtitle mb-2"><bold>Temperature Aujourd'hui</bold></h2>
+                  <Chart type="line" data={basicData} />
+                </div>
           </div>
         </div>
         <br></br>
         <div class="row">
-          <div className="col-9">
-          <div className="card">
+          <div className="col-md-9">
               <div className="card-body center">
-                <h3 className="card-subtitle mb-2">Wind Data Speed Today</h3>
+                <h2 className="card-subtitle mb-2"><bold>Wind Data Today</bold></h2>
                 <Chart type="line" data={VentData} />
                 <br></br>
-                <h4> Average Wind Speed Today: 54 km/h</h4>
+                <h4><bold> Average Wind Speed Today: 54 km/h</bold></h4>
               </div>
-            </div>
           </div>
           <div class="col-md-3">
-            <KnobCom />
+              <KnobCom />
           </div>
             {/* <div className="card">
               <div className="card-body">
@@ -169,35 +176,30 @@ class Home extends Component {
             </div>
             <div className="col-md-12">
               <br></br>
-                <div className="card">
                   <div className="card-body">
-                  <h4 className="card-subtitle mb-2">Intensité du rayonnement solaire en Watt/m2</h4>
+                  <h4 className="card-subtitle mb-2"><bold>Intensité du rayonnement solaire en Watt/m2</bold></h4>
                     <Chart type="line" data={chartData} />
                   </div>
-                </div>
             </div>
           </div>
         </div>
           <div class="col-md-6">
             <div className="row">
               <div className="col-md-12">
-                <div className="card">
                   <div className="card-body">
-                        <h2 className="card-subtitle mb-2 center">Pluie cumulée sur les dernières 24h</h2>
+                        <h2 className="card-subtitle mb-2 center"><bold>Pluie cumulée sur les dernières 24h</bold></h2>
                         <br></br>
                         <Chart type="bar" data={basicData_} />
                         <br></br>
-                        <h2> Pluis Cumule la derniere heure</h2>
+                        <h2> <bold>Pluis Cumule la derniere heure</bold></h2>
                         <h1>560 ml <span><img src="assets/images/rain-icon.png" width="10%"/></span></h1>
                   </div>
-              </div>
             </div>
             </div>
           </div>
-
+            </div>
         </div>
-
-        </div>
+        </body>
     );
   }
 }

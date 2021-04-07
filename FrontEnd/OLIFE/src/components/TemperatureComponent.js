@@ -2,7 +2,7 @@ import {Component} from 'react';
 import { Chart } from 'primereact/chart';
 import {getY} from '../service/dashboardService'
 import KnobCom from './ChartComponents/KnobComponent';
-import '../CSS/Dashboard.css'
+import '../CSS/Dashboard.css';
 import CardExample from './ChartComponents/CardComponent';
 import LineChart from './ChartComponents/LineChartComponent';
 
@@ -94,10 +94,10 @@ class Temperature extends Component {
 
       return(
         <div  className="container">
-          <div className="p-col-10 div-style">
+          <div className="p-col-10">
 
             <div className="row">
-              <div className="col-md-12">
+              <div className="col-md-12 center">
                 <h1>Temperature Data<span><img src="assets/images/temperatureIcon.webp" width="10%"/></span></h1>
               </div>
             </div>
@@ -116,13 +116,13 @@ class Temperature extends Component {
 
           <div className="row">
             <div class="col-md-6">
-                <div className="card">
+                <div className="card-body">
                     <Chart type="line" data={basicData_1} options={optionsToday}/>
                 </div>
             </div>
 
              <div class="col-md-6">
-              <div className="card">
+              <div className="card-body">
                   <Chart type="line" data={lineStylesData} options={optionsLineStyle} />
               </div>
             </div>
@@ -130,13 +130,11 @@ class Temperature extends Component {
 
           <div className="row">
             <div class="col-md-6">
-              <div className="card">
+              <div className="card-body">
                 <Chart type="bar" data={basicData} options={options} />
               </div>
             </div>
-            <div className="col-md-6">
-              <KnobCom />
-            </div>
+
             {/* <div className="col-md-6">
               <div className="card">
                 <LineChart type="bar" title="Data from Sensor today vs Average last Year" labelDataSet1='Sensor Temperature Data year 2021' labelDataSet2='Average Temperature Values'/>
