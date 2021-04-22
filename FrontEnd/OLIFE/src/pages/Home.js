@@ -1,207 +1,130 @@
 import { Component } from 'react';
 import { Chart } from 'primereact/chart';
-import TableCom from '../components/ChartComponents/TableComponent';
-import KnobCom from '../components/ChartComponents/KnobComponent';
-import {LineChart} from '../components/ChartComponents/LineChartComponent';
-import { BreadCrumb } from 'primereact/breadcrumb';
-import {basicData} from '../shared/pluvioData';
-import '../CSS/Home.css';
-import '../CSS/Dashboard.css';
+import TableCom from '../components/TableComponent';
+import KnobCom from '../components/KnobComponent';
+import FormDialog from '../components/DialogComponent';
+import '../CSS/Dashboard.css'
+import { Avg_Humidite_Aujourdui,Avg_Temperature_Aujourdui,TemperatureData_Aujourdhui ,TemperatureOptions_Aujourdhui} from '../shared/TemperatureService';
+import {Avg_WindSpeed_Ajourdhui,WindData_Semaine, WindOptions_Semaine} from '../shared/WindService';
+import {Avg_Rain_Aujourdhui,RainData_Aujourdhui,RainOptions_Aujourdhui} from '../shared/pluvioData'
+import {Data_Intensity} from '../shared/IntensiteService'
+import SideNav from '../components/SideNavComponent'
+import { Button } from 'primereact/button';
 
-class Home extends Component {
+
+class Home extends Component{
   constructor(props){
     super(props);
-    this.state = {
-      dataSets:[
-        {
-            label: "Hello",
-            backgroundColor: 'blue',
-            fill:false,
-            data: [65, 59, 80, 81, 56, 55, 40],
-        },
-        {
-            label: "Aloha",
-            backgroundColor: '#FFA726',
-            fill:false,
-            data: [28, 48, 40, 19, 86, 27, 90],
-        },
-        ]
-    };
+    this.state={
+      isSignedIn:false,
+    }
+    this.ToWhite = this.ToWhite.bind(this);
+    this.ToBlack = this.ToBlack.bind(this);
+
   }
 
-  render(){
-    //breadcrumb
-    const items = [
-      {label: 'Dashboard'},
-    ]
-    const home = { icon: 'pi pi-home', url: 'https://www.primefaces.org/primereact/showcase' }
+  ToWhite() {
+    document.body.style.backgroundColor = "white";
+    document.body.style.color= "black";
+  }
+
+  ToBlack() {
+    document.body.style.backgroundColor = "black";
+    document.body.style.color = "rgba(250,192,46,255)";
+  }
 
 
-    //Bar Data
-    /*
-    const basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-          {
-              label: 'Temperature Today',
-              backgroundColor: '#42A5F5',
-              data: [65, 59, 80, 81, 56, 55, 40],
-              borderColor:"red",
-              fill:false,
-          },
-          {
-              label: 'Avg Temperature Today',
-              borderColor:"blue",
-              data: [28, 48, 40, 19, 86, 27, 90],
-              fill:true
-          }
-      ]
-    };*/
-
-
-
-        //pie data
-        const chartData = {
-          labels: ['0:00', '12:00', '18:00'],
-          datasets: [
-              {
-                  label: 'Avg Intensity Today',
-                  data: [300, 50, 100],
-                  backgroundColor: [
-                      "red"
-                  ],
-                  hoverBackgroundColor: [
-                      "#FF6384",
-                      "#36A2EB",
-                      "#FFCE56"
-                  ]
-              }]
-      };
-
-      const lightOptions = {
-          legend: {
-              labels: {
-                  fontColor: '#495057'
-              }
-          }
-      };
-      const basicData_ = {
-        labels: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00'],
-        datasets: [
-            {
-                label: 'Pluie',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                backgroundColor: '#42A5F5',
-                fill: true,
-                borderColor: '#42A5F5'
-            },
-
-        ]
-    };
-
-    const VentData = {
-      labels: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00'],
-      datasets: [
-          {
-              label: 'Vent',
-              data: [65, 59, 80, 81, 56, 55, 40],
-              backgroundColor: '#42A5F5',
-              fill: true,
-              borderColor: 'blue'
-          },
-
-      ]
-  };
-
-    return(
-      <body>
-      <div className="container">
-        <br></br>
+render(){
+  return(
+      <div className="container-fluid">
         <div className="row">
-        <div className="col-md-3 col-sm-6">
-          <div className="row">
-            <div className="col-sm-12 col-md-12">
-              <br></br>
-              <br></br>
-                <div className="card-body">
+            <div className="margin-1">
+              <Button icon="pi pi-angle-double-left" className="margin-1 p-button-rounded p-button-secondary" onClick={this.ToBlack} />
+            </div>
+            <div className="margin-1">
+              <Button icon="pi pi-angle-double-right" className="margin-1 p-button-rounded p-button-warning" onClick={this.ToWhite} />
+            </div>
+          </div>
+            <SideNav auth={this.props.auth} />
+            <FormDialog auth={this.props.auth} />
+
+      <div className="container">
+        <div className="row">
+          <div className="col-md-3 col-sm-6">
+            <div className="row">
+              <div className="col-sm-12 col-md-12">
+                <br></br>
+                <br></br>
+                <br></br>
+                <div className="card-custom">
                   <h2 className="card-subtitle mb-2"><bold>Temperature</bold></h2>
-                  <h1 className="card-title">26°C &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/temperatureIcon.webp" width="25%"/></span></h1>
-                  <a href="/temperature">Discover More</a>
+                  <h1 className="card-title">{Avg_Temperature_Aujourdui}°C &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/temperatureIcon.webp" width="25%"/></span></h1>
                 </div>
+              </div>
+              <div className="col-12">
+                <div className="card-custom">
+                  <h2 className="card-subtitle mb-2"><bold>Humidite</bold></h2>
+                  <h1 className="card-title">{Avg_Humidite_Aujourdui}% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/humidity-icon.png" width="25%"/></span></h1>
+                </div>
+              </div>
             </div>
-            <div className="col-12">
-                  <br></br>
-                  <br></br>
-                  <div className="card-body">
-                    <h2 className="card-subtitle mb-2"><bold>Humidite</bold></h2>
-                    <h1 className="card-title">89%&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/humidity-icon.png" width="25%"/></span></h1>
-                  </div>
+          </div>
+          <div class="col-md-9">
+            <div className="card-custom">
+              <h2 className="card-subtitle mb-2"><bold>Temperature Aujourd'hui</bold></h2>
+              <Chart type="line" data={TemperatureData_Aujourdhui} options={TemperatureOptions_Aujourdhui}/>
             </div>
           </div>
         </div>
-        <div class="col-md-9">
-                <div className="card-body">
-                  <h2 className="card-subtitle mb-2"><bold>Temperature Aujourd'hui</bold></h2>
-                  <Chart type="line" data={basicData} />
-                </div>
-          </div>
-        </div>
+
         <br></br>
         <div class="row">
           <div className="col-md-9">
-              <div className="card-body center">
-                <h2 className="card-subtitle mb-2"><bold>Wind Data Today</bold></h2>
-                <Chart type="line" data={VentData} />
+              <div className="card-custom center">
+                <h2 className="card-subtitle mb-2"><bold>Wind Data This Week</bold></h2>
+                <Chart type="line" data={WindData_Semaine} />
                 <br></br>
-                <h4><bold> Average Wind Speed Today: 54 km/h</bold></h4>
+                <h4><bold> Average Wind Speed Today: {Avg_WindSpeed_Ajourdhui} km/h</bold></h4>
               </div>
           </div>
+
           <div class="col-md-3">
               <KnobCom />
           </div>
-            {/* <div className="card">
-              <div className="card-body">
-                  <Chart type="doughnut" data={chartData} options={lightOptions} />
-                  <br></br>
-                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
-                                          Some quick example text to build on the card title and make up the bulk of the card's content.
-                                          Some quick example text to build on the card title and make up the bulk of the card's content.My</p>
-              </div>
-            </div> */}
         </div>
-        <div class="row">
 
-        <div className="col-md-6">
-          <div className="row">
-            <div className="col-md-12">
-              <TableCom />
-            </div>
-            <div className="col-md-12">
-              <br></br>
-                  <div className="card-body">
-                  <h4 className="card-subtitle mb-2"><bold>Intensité du rayonnement solaire en Watt/m2</bold></h4>
-                    <Chart type="line" data={chartData} />
-                  </div>
+        <div class="row">
+          <div className="col-md-6">
+            <div className="row">
+              <div className="col-md-12">
+                <TableCom />
+              </div>
+              <div className="col-md-12">
+                <br></br>
+                <div className="card-custom">
+                <h4 className="card-subtitle mb-2"><bold>Intensité du rayonnement solaire en Watt/m2</bold></h4>
+                  <Chart type="line" data={Data_Intensity} />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
           <div class="col-md-6">
             <div className="row">
               <div className="col-md-12">
-                  <div className="card-body">
-                        <h2 className="card-subtitle mb-2 center"><bold>Pluie cumulée sur les dernières 24h</bold></h2>
-                        <br></br>
-                        <Chart type="bar" data={basicData_} />
-                        <br></br>
-                        <h2> <bold>Pluis Cumule la derniere heure</bold></h2>
-                        <h1>560 ml <span><img src="assets/images/rain-icon.png" width="10%"/></span></h1>
-                  </div>
-            </div>
+                <div className="card-custom">
+                  <h2 className="card-subtitle mb-2 center"><bold>Pluie cumulée sur les dernières 24h</bold></h2>
+                  <br></br>
+                  <Chart type="bar" data={RainData_Aujourdhui} />
+                  <br></br>
+                  <h2> <bold>Pluis Cumule la derniere heure</bold></h2>
+                  <h1>{Avg_Rain_Aujourdhui}ml <span><img src="assets/images/rain-icon.png" width="10%"/></span></h1>
+                </div>
+              </div>
             </div>
           </div>
-            </div>
         </div>
-        </body>
+      </div>
+    </div>
     );
   }
 }

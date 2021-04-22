@@ -1,52 +1,95 @@
 import {Component} from 'react'
 import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-
-
+import SignIn from './SignInComponent';
+import { Button } from 'reactstrap';
 class Header extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
+    this.toggleNav = this.toggleNav.bind(this);
+    this.state = {
+        isNavOpen: false
+      };
 
-        this.toggleNav = this.toggleNav.bind(this);
-        this.state = {
-          isNavOpen: false
-        };
-      }
 
-      toggleNav() {
-        this.setState({
-          isNavOpen: !this.state.isNavOpen
+      this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    toggleNav() {
+    this.setState({
+        isNavOpen: !this.state.isNavOpen
         });
-      }
+    }
+
+    handleLogout() {
+        this.props.logoutUser();
+    }
+
+    renderSignInDialog()
+    {
+        return (<SignIn />);
+    }
 
     render() {
+        if(!this.props.auth.isAuthenticated){
+            return(
+                <div>
+                    <Navbar dark color="dark" expand="md">
+                        <div className="container">
+                            <NavbarToggler onClick={this.toggleNav} />
+                            <NavbarBrand>O-Life</NavbarBrand>
+                            <Collapse isOpen={this.state.isNavOpen} navbar>
+                                <Nav navbar>
+                                    <NavItem>
+                                        <NavLink className="nav-link"  to='/home'>Home</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink className="nav-link" to='/about'>About</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink className="nav-link" to='/team'>Team</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink className="nav-link" to='/SignIn'>Sign In</NavLink>
+                                    </NavItem>
+                                </Nav>
+                            </Collapse>
+                        </div>
+                    </Navbar>
+                </div>
+            );
+    }
+    else{
         return(
             <div>
                 <Navbar dark color="dark" expand="md">
                     <div className="container">
                         <NavbarToggler onClick={this.toggleNav} />
-                        <NavbarBrand>OLIFE</NavbarBrand>
+                        <NavbarBrand>O-Life</NavbarBrand>
                         <Collapse isOpen={this.state.isNavOpen} navbar>
                             <Nav navbar>
-                            <NavItem>
-                                <NavLink className="nav-link active"  to='/home'><span className="fa fa-home fa-lg"></span> Home</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to='/about'><span className="fa fa-info fa-lg"></span> About</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link"  to='/home'><span className="fa fa-list fa-lg"></span> Dashboards</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link"  to='/signin'><span className="fa fa-sign-in fa-lg"></span> Sign In</NavLink>
-                            </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link"  to='/home'>Home</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to='/about'>About</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to='/team'>Team</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to='/Notes'>Notes</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <Button onClick={this.handleLogout}>Log Out</Button>
+                                </NavItem>
                             </Nav>
                         </Collapse>
                     </div>
                 </Navbar>
-
             </div>
         );
+    }
     }
 }
 

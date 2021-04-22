@@ -4,6 +4,7 @@ var passport = require('passport');
 var authenticate = require('../authenticate');
 
 const bodyParser = require('body-parser');
+
 var User = require('../models/user');
 
 router.use(bodyParser.json());
@@ -56,5 +57,32 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
     res.json({success: true, token: token, status: 'You are successfully logged in!'});
     console.log("arrived");
 });
+
+router.post('/notes', authenticate.verifyUser, (req, res, next) => {
+    User.findById(req.user._id)
+        .then((user) => {
+            console.log(user);
+            if (user != null) {
+                req.body.user = req.user._id;
+                user.notes.push(req.body);
+                user.save()
+                res.json({"RESPOND":"SUCCESS"})
+                , (err) => next(err);
+            }
+        }, (err) => next(err))
+        .catch((err) => next(err));
+})
+router.get('/notes', authenticate.verifyUser, (req,res,next) => {
+    User.findById(req.user._id)
+        .then((user) => {
+            console.log(user);
+            if (user != null) {
+                req.body.user = req.user._id;
+                res.json(user.notes.map(id=>id.note));
+            }
+        }, (err) => next(err))
+        .catch((err) => next(err));
+})
+
 
 module.exports = router;

@@ -305,6 +305,7 @@ const ParameterSchema = new Schema(
         ,
          {timestamps: true});
 
-var Parameters = mongoose.model('Parameters', ParameterSchema);
-
-module.exports = Parameters;
+//var Parameters = mongoose.model('Parameters', ParameterSchema);
+//module.exports = Parameter;
+mongoose.model('Parameters', ParameterSchema);
+module.exports = mongoose.model('Parameters');

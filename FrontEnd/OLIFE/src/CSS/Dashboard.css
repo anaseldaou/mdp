@@ -1,44 +1,80 @@
 * {
-    font-size: 100%;
-    font-weight: 600;
-    font-family:Arial, Helvetica, sans-serif
-   }
-  
-  .box_ {
-    border: 7px solid rgb(0, 0, 0);
-    padding: 7px;
-    margin: 1vmin;
-  }
-  
-  .row {
-    margin: 2.5vmin;
-  }
-  
-  .div-style{
-    border: 2px solid;
-    padding: 3vmin;
-    margin: 2vmin;
-  }
-  
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  td, th {
-    border: 3px solid #000000;
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
-  
-  .card-body {
-    border: 3px solid #383232;
-    border-radius: 35px;
-    box-shadow: 5px 20px 20px 5px rgba(0,0,0,.1);
-    margin-bottom: 2vmin
-  }
+  font-size: 100%;
+  font-weight: 600;
+  font-family:Arial, Helvetica, sans-serif
+ }
+
+.body{
+  background: black;
+  color: rgba(250,192,46,255);
+}
+
+.box_ {
+  border: 7px solid rgb(0, 0, 0);
+  padding: 7px;
+  margin: 1vmin;
+}
+
+.row {
+  margin: 2.5vmin;
+}
+
+.margin-1 {
+  margin: 2px;
+}
+
+.div-style{
+  border: 2px solid;
+  padding: 3vmin;
+  margin: 2vmin;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 3px solid rgba(250,192,46,255);
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(255, 255, 255)
+}
+
+.card-custom {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+  border: 3px solid rgba(250,192,46,255);
+  border-radius: 35px;
+  box-shadow: 5px 20px 20px 5px rgb(0 0 0 / 10%);
+  margin-bottom: 2vmin;
+}
+
+.sticky-element {
+  position: fixed;
+  top: 95%;
+  left: 0%;
+  width: 135px;
+  font-size: small;
+}
+
+.margin-image{
+  margin-left: 30px;
+}
+
+h1{
+  font-weight: bold !important;
+}
+
+h2{
+  font-weight: bold !important;
+}
+
+h3{
+  font-weight: bold !important;
+}

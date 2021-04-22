@@ -8,16 +8,71 @@ var cors = require('cors');
 
 
 var passport = require('passport');
-var authenticate = require('./authenticate');
+//var authenticate = require('./authenticate');
 
 var DeviceRouter = require('./routes/DevicesRouter');
 var parameterRouter = require('./routes/ParametersRouter');
 var usersRouter = require('./routes/users');
 var indexRouter = require('./routes/index');
 
+
+
 var config = require('./config');
 const url = config.mongoUrl;
+
+
+/*
+const { MongoClient } = require("mongodb");
+const client = new MongoClient(url);
+var Parameter;
+var User;
+async function run() {
+  try {
+    await client.connect();
+    const database = client.db('MDP');
+    Parameter = database.collection('Parameters');
+    User = database.collection('Users');
+    var i = Parameter.aggregate([
+      { $group : { 
+      _id : { year: { $year : "$timestamp" },
+              month: { $month : "$timestamp" },
+              week:{$week : "$timestamp"},
+              day: { $dayOfMonth : "$timestamp" },
+              hour: {$hour : "$timestamp"}},
+               
+      avg : {$avg:"$Temperature"},
+      sum : {$sum:"$Temperature"}, //equivalent Pluie_cumulee par Heure
+      min: {$min:"$Temperature"},
+      max : {$max:"$Temperature"}},
+
+  },
+  {$limit:24},
+  {$sort : {_id:1}}
+   //day: { $dayOfMonth : "$timestamp" }  ,
+   //hour: {$hour : "$timestamp"}  }}
+  ]);
+
+  console.log(i);
+  
+  }finally {}
+} 
+run()
+
 const connect = mongoose.connect(url);
+*/
+
+const connectionParams={
+  useNewUrlParser: true
+}
+const connect = mongoose.connect(url,connectionParams
+).then( () => {
+        console.log('Connected to database ')
+    })
+    .catch( (err) => {
+        console.error(`Error connecting to the database. \n${err}`);
+    })
+
+
 var app = express();
 // view engine setup
 app.use(cors());
@@ -41,9 +96,18 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+
+
 connect.then((db) => {
   console.log("Connected correctly to server");
 }, (err) => { console.log(err); });
+
+
+
+
+
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -88,32 +152,4 @@ transporter.sendMail(mailOptions, function(error, info){
 console.log('4');
 
 
-
-
-
-
-/*
-function auth (req, res, next) {
-  console.log(req.headers);
-  var authHeader = req.headers.authorization;
-  if (!authHeader) {
-      var err = new Error('You are not authenticated!');
-      res.setHeader('WWW-Authenticate', 'Basic');
-      err.status = 401;
-      next(err);
-      return;
-  }
-
-  var auth = new Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
-  var user = auth[0];
-  var pass = auth[1];
-  if (user == 'admin' && pass == 'password') {
-      next(); // authorized
-  } else {
-      var err = new Error('You are not authenticated!');
-      res.setHeader('WWW-Authenticate', 'Basic');      
-      err.status = 401;
-      next(err);
-  }
-}*/
-module.exports = app;
+module.exports =app;

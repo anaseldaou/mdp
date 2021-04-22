@@ -9,7 +9,5 @@ export function getPluvioData(echelle)
         error => {
             throw error;
         })
-    .then(response=> response)
-
-    
+    .then(response=> response)    
 };
