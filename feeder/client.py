@@ -5,7 +5,7 @@ PORT = 22        # The port used by the server
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
-    s.sendall(b'anas:daou')
+    s.sendall(b'1 21/2/2021 3 4 5 6.5')
     data = s.recv(1024)
 
 print('Received', repr(data))
