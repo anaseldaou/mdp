@@ -7,13 +7,12 @@ PORT = 22        # Port to listen on (non-privileged ports are > 1023)
 import requests
 url = 'http://localhost:3030/parameter'
 import pymongo
-from datetime import datetime
 myClient =pymongo.MongoClient("mongodb+srv://Cyril:OLIFE2021@olife.7ffdi.mongodb.net/MDP?retryWrites=true&w=majority")
 db = myClient.test
 mydb = myClient['MDP']
 mycol = mydb['mockData']
 
-allParameter=False
+allParameter=True
 
 expectedParameter=["Id","timestamp",
     "Identifiant_Station",
@@ -34,13 +33,7 @@ expectedParameter=["Id","timestamp",
     "PPM4",
     "PP10",
     ]
-currentParameter=["Id","timestamp",
-    "Identifiant_Station",
-    "Voltage_Lithium ",
-    "Voltage_Extern",
-    "Temperature",
-    "Humidity"
-    ]
+indexOfPermanentParameter=[0,1,2,3,4,5,6]
 
 
 
@@ -52,22 +45,29 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         with conn:
             print('Connected by', addr)
             while True:
-                data = conn.recv(1024)
+                data = conn.recv(1024000)
                 received=data.decode('utf-8')
-                listOfData=received.split(" ")
-                print(listOfData)
+                listOfLinesOfData=received.split("\n")
+                for i in range(len(listOfLinesOfData)):
+                    listOfLinesOfData[i]=listOfLinesOfData[i].split(" ")
+                print(listOfLinesOfData)
                 import datetime
-                date_text = listOfData[1]
-                date = datetime.datetime.strptime(date_text, "%d/%m/%Y")
-                listOfData[1]=date
-                json={}
-                if allParameter:
-                    for i in range(len(listOfData)):
-                        json[expectedParameter[i]]=listOfData[i]
-                else:
-                    for i in range(len(listOfData)):
-                        json[currentParameter[i]]=listOfData[i]
-                x = mycol.insert_one(json)
+                for i in listOfLinesOfData:
+                    json={}
+                    #convert date string to timestamp
+                    date_text = i[1]
+                    date = datetime.datetime.strptime(date_text, "%d/%m/%Y")
+                    i[1]=date
+                    ##########
+                    
+                    if allParameter:
+                        for j in range(len(i)):
+                            json[expectedParameter[j]]=i[j]
+                    else:
+                        for j in indexOfPermanentParameter:
+                            json[expectedParameter[j]]=i[j]
+                    print(json)
+                    x = mycol.insert_one(json)
                 if data:
                     break
                 conn.sendall(x)

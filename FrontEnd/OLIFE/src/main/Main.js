@@ -10,7 +10,6 @@ import Team from '../pages/Team';
 import Rain from '../pages/Rain'
 import Gaz from '../pages/Gaz'
 import Wind from '../pages/Wind'
-import SignIn from '../components/SignInComponent';
 import { connect} from 'react-redux';
 import { loginUser, logoutUser} from '../redux/ActionCreators';
 import '../CSS/About.css';
@@ -46,7 +45,7 @@ class Main extends Component {
         return(
 
         <div >
-        <Header auth={this.props.auth} logoutUser={this.props.logoutUser}/>
+        <Header auth={this.props.auth} loginUser={this.props.loginUser} logoutUser={this.props.logoutUser}/>
 
         <Switch>
         <Route path="/home" component={() => <Home auth={this.props.auth} />} />
@@ -57,10 +56,6 @@ class Main extends Component {
         <Route exact path="/rain" component={Rain}/>
         <Route exact path="/gaz" component={Gaz}/>
         <Route exact path="/wind" component={Wind}/>
-        <Route exact path="/signin" component={() => <SignIn auth={this.props.auth} 
-                                                            loginUser={this.props.loginUser} 
-                                                            logoutUser={this.props.logoutUser}
-                                                  />}/>
         <Redirect to="/home"/>
         </Switch>
 
@@ -72,16 +67,12 @@ class Main extends Component {
       return(
 
         <div >
-        <Header auth={this.props.auth} />
+        <Header auth={this.props.auth} loginUser={this.props.loginUser} logoutUser={this.props.logoutUser} />
 
         <Switch>
         <Route path="/home" component={() => <Home auth={this.props.auth} />} />
         <Route exact path="/about" component={About}/>
         <Route exact path="/team" component={Team}/>
-        <Route exact path="/signin" component={() => <SignIn auth={this.props.auth} 
-                                                            loginUser={this.props.loginUser} 
-                                                            logoutUser={this.props.logoutUser}
-                                                  />}/>
         <Redirect to="/home"/>
         </Switch>
 

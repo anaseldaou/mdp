@@ -64,12 +64,11 @@ export const PluvioDataPerHour = {
 var dataPerDay = [];
 var lastSevenDay =[];
 
-  Promise.resolve(getPluvioData("perDay"))
+getPluvioData("perDay")
         .then(response => { 
                             for ( key in response) 
                             {
                                 lastSevenDay.push(days[new Date(response[key].year,response[key].month,response[key].day).getDay()]);
-                                console.log(days[new Date(response[key].year,response[key].month,response[key].day).getDay()]);
                                 dataPerDay.push(response[key].avg)
                             };
                           });
@@ -131,10 +130,10 @@ export const PluvioDataPerDay = {
 
 
 
-  var dataPerWeek = [];
+var dataPerWeek = [];
 var lastSevenWeek =[];
 
-  Promise.resolve(getPluvioData("perWeek"))
+getPluvioData("perWeek")
         .then(response => { 
                             for ( key in response) 
                             {
@@ -165,13 +164,14 @@ export const PluvioDataPerWeek = {
 var dataPerMonth = [];
 var months =[];
 
-Promise.resolve(getPluvioData("perMonth"))
+getPluvioData("perMonth")
         .then(response => { 
                             for ( key in response) 
                             {
                                 dataPerMonth.push(monthsOfYear[response[key].month-1]); // monthsOfYear[response[key].month-1] => convertir mois de chiffre en String
                                 months.push(response[key].avg)
                             };
+                            console.log(dataPerMonth);
                           });
 
 export const PluvioDataPerMonth = {
@@ -231,7 +231,7 @@ export const PluvioDataPerMonth = {
 var dataPerYear = [];
 var lastTenYear =[];
 
-Promise.resolve(getPluvioData("perYear"))
+getPluvioData("perYear")
         .then(response => { 
                             for ( key in response) 
                             {
@@ -258,4 +258,3 @@ export const PluvioDataPerYear = {
         }
     ]
   };
-

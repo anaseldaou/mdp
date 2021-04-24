@@ -17,7 +17,7 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            <Main />
+            <Main auth={this.props.auth}/>
           </div>
         </BrowserRouter>
       </Provider>

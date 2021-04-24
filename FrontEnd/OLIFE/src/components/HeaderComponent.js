@@ -1,39 +1,51 @@
-import {Component} from 'react'
-import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron } from 'reactstrap';
+import React,{Component} from 'react'
+import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem,
+    Form,FormGroup,
+Label , Input , Modal , ModalHeader , ModalBody } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import SignIn from './SignInComponent';
 import { Button } from 'reactstrap';
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.toggleNav = this.toggleNav.bind(this);
-    this.state = {
-        isNavOpen: false
-      };
-
-
-      this.handleLogout = this.handleLogout.bind(this);
+    constructor(props) {
+        super(props);
+        this.state = {
+            isNavOpen: false,
+            isModalOpen: false
+        };
+        this.toggleNav = this.toggleNav.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
+    sleep(milliseconds){
+        return new Promise(resolve => setTimeout(resolve, milliseconds))
+      }
+
     toggleNav() {
-    this.setState({
-        isNavOpen: !this.state.isNavOpen
+        this.setState({
+            isNavOpen: !this.state.isNavOpen
         });
+    }
+
+    toggleModal() {
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
+    handleLogin(event) {
+        this.props.loginUser({username: this.username.value, password: this.password.value});
+        this.toggleModal();
+        event.preventDefault();
     }
 
     handleLogout() {
         this.props.logoutUser();
     }
 
-    renderSignInDialog()
-    {
-        return (<SignIn />);
-    }
-
     render() {
-        if(!this.props.auth.isAuthenticated){
             return(
-                <div>
+                <React.Fragment>
                     <Navbar dark color="dark" expand="md">
                         <div className="container">
                             <NavbarToggler onClick={this.toggleNav} />
@@ -50,46 +62,59 @@ class Header extends Component {
                                         <NavLink className="nav-link" to='/team'>Team</NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink className="nav-link" to='/SignIn'>Sign In</NavLink>
+                                        {this.props.auth.isAuthenticated ? <NavLink className="nav-link" to='/Notes'>My Notes</NavLink>: null}
                                     </NavItem>
                                 </Nav>
+                                <Nav className="ml-auto" navbar>
+                                <NavItem>
+                                    { !this.props.auth.isAuthenticated ?
+                                        <Button outline onClick={this.toggleModal}>
+                                            <span className="fa fa-sign-in fa-lg"></span> Login
+                                            {this.props.auth.isFetching ?
+                                                <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                                : null
+                                            }
+                                        </Button>
+                                        :
+                                        <div>
+                                        <div className="navbar-text mr-3">{this.props.auth.user.username}</div>
+                                        <Button outline onClick={this.handleLogout}>
+                                            <span className="fa fa-sign-out fa-lg"></span> Logout
+                                            {this.props.auth.isFetching ?
+                                                <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                                : null
+                                            }
+                                        </Button>
+                                        </div>
+                                    }
+
+                                </NavItem>
+                            </Nav>
                             </Collapse>
                         </div>
                     </Navbar>
-                </div>
+
+                    <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
+                    <ModalBody>
+                        <Form onSubmit={this.handleLogin}>
+                            <FormGroup>
+                                <Label htmlFor="username">Username</Label>
+                                <Input type="text" id="username" name="username"
+                                    innerRef={(input) => this.username = input} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor="password">Password</Label>
+                                <Input type="password" id="password" name="password"
+                                    innerRef={(input) => this.password = input}  />
+                            </FormGroup>
+                            <Button type="submit" value="submit" color="primary">Login</Button>
+                        </Form>
+                    </ModalBody>
+                </Modal>
+                </React.Fragment>
             );
-    }
-    else{
-        return(
-            <div>
-                <Navbar dark color="dark" expand="md">
-                    <div className="container">
-                        <NavbarToggler onClick={this.toggleNav} />
-                        <NavbarBrand>O-Life</NavbarBrand>
-                        <Collapse isOpen={this.state.isNavOpen} navbar>
-                            <Nav navbar>
-                                <NavItem>
-                                    <NavLink className="nav-link"  to='/home'>Home</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className="nav-link" to='/about'>About</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className="nav-link" to='/team'>Team</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className="nav-link" to='/Notes'>Notes</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <Button onClick={this.handleLogout}>Log Out</Button>
-                                </NavItem>
-                            </Nav>
-                        </Collapse>
-                    </div>
-                </Navbar>
-            </div>
-        );
-    }
+
     }
 }
 

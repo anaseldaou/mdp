@@ -4,8 +4,7 @@ import {getNotesData} from '../service/noteService';
 
 var notes =[];
 var key;
-Promise.resolve(getNotesData())
-        .then(response => { 
+getNotesData().then(response => { 
                             for ( key in response) 
                             {
                                 notes.push(response[key]);
