@@ -1,36 +1,57 @@
 //particule de micron
-export var particule_1_micron_aujourdhui = 13;
-export var particule_2_5_micron_aujourdhui = 28
-export var particule_10_micron_aujourdhui = 12
 
-export var Avg_Co2_Aujourdhui = 42;
+import {getCO2Data} from '../service/GazService';
+import {getSO2Data} from '../service/GazService';
+import {parseResponseDay} from '../service/methode';
+
+
+
+var  monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+
+export var particule_1_micron_aujourdhui = 13;
+export var particule_2_5_micron_aujourdhui = 28;
+export var particule_10_micron_aujourdhui = 12;
+
+
+/*
+var Avg_Co2_Aujourdhui;
+getCO2Data("perDay/1").then(response => Avg_Co2_Aujourdhui=response.avg);
+module.exports=Avg_Co2_Aujourdhui;*/
+
 export var Avg_So2_Aujourdhui = 28;
 export var Avg_No2_Aujourdhui = 32;
 
 
 
-//Semaine
+
+var CO2PerDay = [];
+var lastSevenDay =[];
+getCO2Data("perDay/7").then(response => { 
+                            CO2PerDay= parseResponseDay(response)[0];
+                            lastSevenDay = parseResponseDay(response)[1];
+                          });
+
+
+var SO2PerDay = [];
+getSO2Data("perDay/7").then(response => SO2PerDay= parseResponseDay(response)[0]); 
+
 export var GazData_Semaine = {
-  labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+  labels: lastSevenDay,
   datasets: [
       {
           label: "CO2",
-          data: [65, 59, 80, 81, 56, 55, 40],
+          data: CO2PerDay,
           backgroundColor: '#42A5F5',
       },
       {
           label:"SO2",
-          data: [28, 48, 40, 19, 86, 27, 90],
+          data: SO2PerDay,
           backgroundColor: '#66BB6A',
-      },
-      {
-        label: "NO2",
-        data: [24, 56, 12, 12, 3, 67, 12],
-        backgroundColor: '#FFA726',
-    },
+      }
   ]
 };
-
 export var GazOptions_Semaine = {
   title: {
       display: true,
@@ -41,6 +62,9 @@ export var GazOptions_Semaine = {
       position: 'top'
   }
 };
+
+
+
 
 export var GazData_Last_30_Days = {
   labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],

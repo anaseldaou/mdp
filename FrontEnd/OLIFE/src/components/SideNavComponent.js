@@ -7,7 +7,6 @@ class SideNav extends Component{
   }
     render(){
       var sideNav;
-      console.log("Is authentictaed :",this.props.auth.isAuthenticated)
       if(this.props.auth.isAuthenticated){
         sideNav=<div class="sidenav">
                   <a href="/temperature"><img src="/assets/images/temperatureIcon.webp" alt="temperature" width="100%" data-toggle="tooltip" data-placement="top" title="Temperature"/></a>

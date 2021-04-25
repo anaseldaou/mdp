@@ -1,7 +1,7 @@
 export var temperatureLabels ={
   title: "Temperature",
   temperature_donnee: "Data de la Temperature",
-  temperature_aujourdhui:"Temperature Aujourd'hui",
+  temperature_aujourdhui:"Temperature Aujourd'hui en °C",
   temperature_semaine:"Temperature cette Semaine",
   temperature_image: "/assets/images/temperatureIcon.webp",
   avg:"Moyenne Historique de temperature aujourd'hui",

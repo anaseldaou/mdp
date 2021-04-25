@@ -10,7 +10,7 @@ var cors = require('cors');
 var passport = require('passport');
 //var authenticate = require('./authenticate');
 
-var DeviceRouter = require('./routes/DevicesRouter');
+
 var parameterRouter = require('./routes/ParametersRouter');
 var usersRouter = require('./routes/users');
 var indexRouter = require('./routes/index');
@@ -85,7 +85,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
-app.use('/Devices',DeviceRouter);
 app.use('/parameter',parameterRouter);
 app.use('/users', usersRouter);
 

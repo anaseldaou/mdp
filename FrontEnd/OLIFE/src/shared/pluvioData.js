@@ -8,7 +8,7 @@ var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
 var dataPerHour = [];
 var lastTwentyFourHour =[];
 
-  Promise.resolve(getPluvioData("perHour"))
+  getPluvioData("perHour/24")
         .then(response => { 
                             for ( key in response) 
                             {
@@ -17,24 +17,6 @@ var lastTwentyFourHour =[];
                             };
                           });
 
-export const PluvioDataPerHour = {
-    labels: lastTwentyFourHour.reverse(),
-    datasets: [
-        {
-            label: 'Temperature Today',
-            backgroundColor: '#42A5F5',
-            data: dataPerHour,
-            borderColor:"red",
-            fill:true,
-        },
-        {
-            label: 'Avg Temperature Today',
-            borderColor:"blue",
-            data: dataPerHour,
-            fill:true
-        }
-    ]
-  };
 
   export var RainData_Aujourdhui = {
     labels: lastTwentyFourHour,
@@ -64,7 +46,7 @@ export const PluvioDataPerHour = {
 var dataPerDay = [];
 var lastSevenDay =[];
 
-getPluvioData("perDay")
+getPluvioData("perDay/7")
         .then(response => { 
                             for ( key in response) 
                             {
@@ -133,7 +115,7 @@ export const PluvioDataPerDay = {
 var dataPerWeek = [];
 var lastSevenWeek =[];
 
-getPluvioData("perWeek")
+getPluvioData("perWeek/7")
         .then(response => { 
                             for ( key in response) 
                             {
@@ -164,14 +146,13 @@ export const PluvioDataPerWeek = {
 var dataPerMonth = [];
 var months =[];
 
-getPluvioData("perMonth")
+getPluvioData("perMonth/12")
         .then(response => { 
                             for ( key in response) 
                             {
                                 dataPerMonth.push(monthsOfYear[response[key].month-1]); // monthsOfYear[response[key].month-1] => convertir mois de chiffre en String
                                 months.push(response[key].avg)
                             };
-                            console.log(dataPerMonth);
                           });
 
 export const PluvioDataPerMonth = {

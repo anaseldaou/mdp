@@ -5,11 +5,10 @@ const Parameter = require('../models/Parameters');
 
 const PluvioRouter = express.Router();
 
-var  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-var days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
 
-PluvioRouter.route('/:echelle')
+PluvioRouter.route('/:echelle/:limit')
 .get((req,res,next) => {
+    var limite = req.params.limit == undefined ? 1500 : parseInt(req.params.limit);
     switch(req.params.echelle){
         case "perHour" :
             Parameter.aggregate([
@@ -24,9 +23,8 @@ PluvioRouter.route('/:echelle')
                 sum : {$sum:"$Pluvio"}, //equivalent Pluie_cumulee par Heure
                 min: {$min:"$Pluvio"},
                 max : {$max:"$Pluvio"}},
-        
             },
-            {$limit:24},
+            {$limit: parseInt(req.params.limit)},
             {$sort : {_id:1}}
              //day: { $dayOfMonth : "$timestamp" }  ,
              //hour: {$hour : "$timestamp"}  }}
@@ -57,12 +55,12 @@ PluvioRouter.route('/:echelle')
                         week:{$week : "$timestamp"},
                         day: { $dayOfMonth : "$timestamp" }}, 
                 avg : {$avg:"$Pluvio"},
-                sum : {$sum:"$Pluvio"}, //equivalent Pluie_cumulee par 24 heure
+                sum : {$sum:"$Pluvio"}, //equivalent Pluie_cumulee par parseInt(req.params.echelle) heure
                 min: {$min:"$Pluvio"},
                 max : {$max:"$Pluvio"}},
                 
             },
-            {$limit:7},
+            {$limit: limite},
             {$sort : {_id:1}}
             ])
             .then(response => {
@@ -95,7 +93,7 @@ PluvioRouter.route('/:echelle')
                 
             }
             ,
-            {$limit:7},
+            {$limit: limite},
             {$sort : {_id:1}}
             ])
             .then(response => {
@@ -122,7 +120,7 @@ PluvioRouter.route('/:echelle')
                         sum : {$sum:"$Pluvio"},
                         min: {$min:"$Pluvio"},
                         max : {$max:"$Pluvio"}}},
-                        {$limit:12},
+                        {$limit: limite},
                         {$sort : {_id:1}}
             ])
             .then(response => {
@@ -167,10 +165,9 @@ PluvioRouter.route('/:echelle')
             res.setHeader('Content-Type', 'application/json');
             // define an empty query document
             const query = {};
-            // sort in descending (-1) order by length
-            const sort = { length: 1 };
-            const limit = 10;
-            Parameter.find({},{Pluvio: 1 , timestamp:1}).sort(sort).limit(limit).then(
+            // sort in descending (-parseInt(req.params.limit)) order by length
+            const sort = { _id:1 };
+            Parameter.find({},{Pluvio:1 ,timestamp:1}).sort(sort).limit(parseInt(req.params.limit)).then(
                 response=>{ console.log(response) ; res.json(response) ;}
             )
             break;

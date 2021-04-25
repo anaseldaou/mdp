@@ -1,4 +1,12 @@
-export var Avg_WindSpeed_Ajourdhui = 54;
+import {parseResponseDay} from '../service/methode';
+import {getWindSpeedData} from '../service/windService';
+
+export var Avg_WindSpeed_Ajourdhui = parseResponseDay(getWindSpeedData("perDay/1"))[0];
+
+var  monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+
+
 
 export var WindData_Semaine = {
   labels: [

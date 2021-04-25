@@ -18,7 +18,7 @@ var TemperatureRouter = require('./TemperatureRouter.js');
 
 const getWeek = (day) =>
 {
-    return ( Math.floor(day/7) > 4 )  ? 4 : Math.floor(day/7)+1;
+    return ( Math.floor(day/parseInt(req.params.limit)) > 4 )  ? 4 : Math.floor(day/parseInt(req.params.limit))+parseInt(req.params.limit);
 }
 
 const ParameterRouter = express.Router();
@@ -29,7 +29,7 @@ ParameterRouter.use('/Pluvio',PluvioRouter);
 ParameterRouter.use('/WindDir',WindDirRouter);
 ParameterRouter.use('/WindSpeed',WindSpeedRouter);
 ParameterRouter.use('/Humidity',HumidityRouter);
-ParameterRouter.use('/PPM1',PPM1Router);
+ParameterRouter.use('/PPMparseInt(req.params.limit)',PPM1Router);
 ParameterRouter.use('/PPM2_5',PPM2_5Router);
 ParameterRouter.use('/PPM4',PPM4Router);
 ParameterRouter.use('/PP10',PP10Router);
@@ -63,7 +63,7 @@ ParameterRouter.route('/')
      }
     
      req.body.Pluie_cumulee_sur_la_derniere_heure = last_pluie_cumule_pour_heure;
-     req.body.Pluie_cumulee_sur_les_dernieres_24h = last_pluie_cumule_pour_jour;
+     req.body.Pluie_cumulee_sur_les_dernieres_parseInt(req.params.echelle)h = last_pluie_cumule_pour_jour;
 
      req.body.hour=last_hour;
      req.body.day=last_day;

@@ -17,10 +17,10 @@ export default function Team(){
 Liban (2014-2018)" image="/assets/images/drapeau__252x252.png"/>
             </div>
             <div className="col-md-4">
-              <Member name="Dr.Youssef Bakouny" title="Professeur associé à la Faculté d'ingénierie ESIB de l'Université Saint Joseph de Beyrouth" image="/assets/images/bakouny_.jpg"/>
+              <Member name="Youssef Bakouny" title="Professeur associé à la Faculté d'ingénierie ESIB de l'Université Saint Joseph de Beyrouth" image="/assets/images/bakouny_.jpg"/>
             </div>
             <div className="col-md-4">
-              <Member name="Dr.Gabriel Khoury" title="Professeur associé à la Faculté d'ingénierie ESIB de l'Université Saint Joseph de Beyrouth" image="/assets/images/Gabriel-Khoury.jpg"/>
+              <Member name="Gabriel Khoury" title="Professeur associé à la Faculté d'ingénierie ESIB de l'Université Saint Joseph de Beyrouth" image="/assets/images/Gabriel-Khoury.jpg"/>
             </div>
           </div>
           <br></br>

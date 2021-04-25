@@ -1,18 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Parameter = require('../models/Parameters');
+const ParameterRouter = require('./ParametersRouter');
 
 
 const CO2Router = express.Router();
 
-var  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 
-CO2Router.route('/:echelle')
+CO2Router.route('/:echelle/:limit?')
 .get((req,res,next) => {
+    var limite = req.params.limit == undefined ? 1500 : parseInt(req.params.limit);
     switch(req.params.echelle){
         case "perHour" :
             Parameter.aggregate([
+                {$sort : {'timestamp':-1}},
                 { $group : { 
                 _id : { year: { $year : "$timestamp" },
                         month: { $month : "$timestamp" },
@@ -26,8 +28,7 @@ CO2Router.route('/:echelle')
                 max : {$max:"$Co2"}},
         
             },
-            {$limit:24},
-            {$sort : {_id:1}}
+            {$limit:limite},
              //day: { $dayOfMonth : "$timestamp" }  ,
              //hour: {$hour : "$timestamp"}  }}
             ])
@@ -57,12 +58,12 @@ CO2Router.route('/:echelle')
                         week:{$week : "$timestamp"},
                         day: { $dayOfMonth : "$timestamp" }}, 
                 avg : {$avg:"$Co2"},
-                sum : {$sum:"$Co2"}, //equivalent Pluie_cumulee par 24 heure
+                sum : {$sum:"$Co2"}, //equivalent Pluie_cumulee par parseInt(req.params.echelle) heure
                 min: {$min:"$Co2"},
                 max : {$max:"$Co2"}},
                 
             },
-            {$limit:7},
+            {$limit: limite},
             {$sort : {_id:1}}
             ])
             .then(response => {
@@ -95,7 +96,7 @@ CO2Router.route('/:echelle')
                 
             }
             ,
-            {$limit:7},
+            {$limit: limite},
             {$sort : {_id:1}}
             ])
             .then(response => {
@@ -122,7 +123,7 @@ CO2Router.route('/:echelle')
                         sum : {$sum:"$Co2"},
                         min: {$min:"$Co2"},
                         max : {$max:"$Co2"}}},
-                        {$limit:12},
+                        {$limit: limite},
                         {$sort : {_id:1}}
             ])
             .then(response => {
@@ -130,7 +131,7 @@ CO2Router.route('/:echelle')
                 const resultat = response.map( doc =>  {
                     return {
                     year: doc._id.year,
-                    month : months[doc._id.month],
+                    month :doc._id.month,
                     avg : doc.avg,
                     sum : doc.sum,
                     min : doc.min,
@@ -167,10 +168,10 @@ CO2Router.route('/:echelle')
             res.setHeader('Content-Type', 'application/json');
             // define an empty query document
             const query = {};
-            // sort in descending (-1) order by length
-            const sort = { length: 1 };
-            const limit = 10;
-            Parameter.find({},{Co2: 1 , timestamp:1}).sort(sort).limit(limit).then(
+            // sort in descending (-parseInt(req.params.limit)) order by length
+            const sort = { _id:1 };
+            const limit = parseInt(req.params.limit);
+            Parameter.find({},{Co2:1 ,timestamp:1}).sort(sort).limit(limit).then(
                 response=>{ console.log(response) ; res.json(response) ;}
             )
             break;

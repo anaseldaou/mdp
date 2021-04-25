@@ -14,24 +14,26 @@ mycol = mydb['mockData']
 
 allParameter=True
 
-expectedParameter=["Id","timestamp",
+expectedParameter=["Id",
+    "timestamp",
     "Identifiant_Station",
     "Voltage_Lithium ",
     "Voltage_Extern",
     "Temperature",
     "Humidity",
-    "Wind_Speed0" ,
-    "Wind_Speed1",
+    "Pyran" ,
+    "Wind_Speed",
     "Pluvio",
-    "Wind_Speed2" ,
+    "Wind_Dir" ,
     "Co2",
-    "Wind_Speed3" ,
-    "So2" ,
-    "Pyran",
+    "SO2" ,
     "PPM1",
     "PPM2_5",
     "PPM4",
-    "PP10",
+    "PP10"
+#    "additional_sensor",
+#    "additional_sensor",
+#    "additional_sensor"
     ]
 indexOfPermanentParameter=[0,1,2,3,4,5,6]
 
@@ -61,7 +63,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     ##########
                     
                     if allParameter:
-                        for j in range(len(i)):
+                        for j in range(len(expectedParameter)):
                             json[expectedParameter[j]]=i[j]
                     else:
                         for j in indexOfPermanentParameter:

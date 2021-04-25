@@ -4,12 +4,13 @@ import TableCom from '../components/TableComponent';
 import KnobCom from '../components/KnobComponent';
 import FormDialog from '../components/DialogComponent';
 import '../CSS/Dashboard.css'
-import { Avg_Humidite_Aujourdui,Avg_Temperature_Aujourdui,TemperatureData_Aujourdhui ,TemperatureOptions_Aujourdhui} from '../shared/TemperatureService';
-import {Avg_WindSpeed_Ajourdhui,WindData_Semaine, WindOptions_Semaine} from '../shared/WindService';
-import {Avg_Rain_Aujourdhui,RainData_Aujourdhui,RainOptions_Aujourdhui} from '../shared/pluvioData'
-import {Data_Intensity} from '../shared/IntensiteService'
+import { Avg_Humidite_Aujourdui,Avg_Temperature_Aujourdui,TemperatureData_Aujourdhui ,TemperatureOptions_Aujourdhui} from '../mockData/TemperatureService';
+import {Avg_WindSpeed_Ajourdhui,WindData_Semaine, WindOptions_Semaine} from '../mockData/WindService';
+import {Avg_Rain_Aujourdhui,RainData_Aujourdhui,RainOptions_Aujourdhui} from '../mockData/RainService'
+import {Data_Intensity} from '../mockData/IntensiteService'
 import SideNav from '../components/SideNavComponent'
 import { Button } from 'primereact/button';
+
 
 
 class Home extends Component{
@@ -63,7 +64,7 @@ render(){
               </div>
               <div className="col-12">
                 <div className="card-custom">
-                  <h2 className="card-subtitle mb-2"><bold>Humidite</bold></h2>
+                  <h2 className="card-subtitle mb-2"><bold>humidité</bold></h2>
                   <h1 className="card-title">{Avg_Humidite_Aujourdui}% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/humidity-icon.png" width="25%"/></span></h1>
                 </div>
               </div>
@@ -71,7 +72,7 @@ render(){
           </div>
           <div class="col-md-9">
             <div className="card-custom">
-              <h2 className="card-subtitle mb-2"><bold>Temperature Aujourd'hui</bold></h2>
+              <h2 className="card-subtitle mb-2"><bold>Temperature Aujourd'hui en °C</bold></h2>
               <Chart type="line" data={TemperatureData_Aujourdhui} options={TemperatureOptions_Aujourdhui}/>
             </div>
           </div>
@@ -81,10 +82,10 @@ render(){
         <div class="row">
           <div className="col-md-9">
               <div className="card-custom center">
-                <h2 className="card-subtitle mb-2"><bold>Wind Data This Week</bold></h2>
+                <h2 className="card-subtitle mb-2"><bold>Vitesse du Vent cette semaine en Km/h</bold></h2>
                 <Chart type="line" data={WindData_Semaine} />
                 <br></br>
-                <h4><bold> Average Wind Speed Today: {Avg_WindSpeed_Ajourdhui} km/h</bold></h4>
+                <h4><bold>Moyenne de la vitesse du vent Aujourd'hui en Km/h: {Avg_WindSpeed_Ajourdhui} km/h</bold></h4>
               </div>
           </div>
 

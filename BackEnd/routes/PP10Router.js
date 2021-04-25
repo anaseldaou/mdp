@@ -6,11 +6,11 @@ const Parameter = require('../models/Parameters');
 
 const PP10Router = express.Router();
 
-var  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 
-PP10Router.route('/:echelle')
+PP10Router.route('/:echelle/:limit')
 .get((req,res,next) => {
+    var limite = req.params.limit == undefined ? 1500 : parseInt(req.params.limit);
     switch(req.params.echelle){
         case "perHour" :
             Parameter.aggregate([
@@ -27,10 +27,8 @@ PP10Router.route('/:echelle')
                 max : {$max:"$PP10"}},
         
             },
-            {$limit:24},
+            {$limit: limite},
             {$sort : {_id:1}}
-             //day: { $dayOfMonth : "$timestamp" }  ,
-             //hour: {$hour : "$timestamp"}  }}
             ])
             .then(response => {
                 console.log(response.map(doc => doc._id));
@@ -58,12 +56,12 @@ PP10Router.route('/:echelle')
                         week:{$week : "$timestamp"},
                         day: { $dayOfMonth : "$timestamp" }}, 
                 avg : {$avg:"$PP10"},
-                sum : {$sum:"$PP10"}, //equivalent Pluie_cumulee par 24 heure
+                sum : {$sum:"$PP10"}, //equivalent Pluie_cumulee par parseInt(req.params.echelle) heure
                 min: {$min:"$PP10"},
                 max : {$max:"$PP10"}},
                 
             },
-            {$limit:7},
+            {$limit: limite},
             {$sort : {_id:1}}
             ])
             .then(response => {
@@ -96,8 +94,8 @@ PP10Router.route('/:echelle')
                 
             }
             ,
-            {$limit:7},
-            {$sort : {_id:1}}
+            {$limit: limite},
+            {$sort : 1}
             ])
             .then(response => {
                 console.log(response.map(doc => doc._id));
@@ -123,8 +121,8 @@ PP10Router.route('/:echelle')
                         sum : {$sum:"$PP10"},
                         min: {$min:"$PP10"},
                         max : {$max:"$PP10"}}},
-                        {$limit:12},
-                        {$sort : {_id:1}}
+                        {$limit: limite},
+                        {$sort : 1}
             ])
             .then(response => {
                 res.setHeader('Content-Type', 'application/json');
@@ -168,9 +166,9 @@ PP10Router.route('/:echelle')
             res.setHeader('Content-Type', 'application/json');
             // define an empty query document
             const query = {};
-            // sort in descending (-1) order by length
+            // sort in descending (-parseInt(req.params.limit)) order by length
             const sort = { length: 1 };
-            const limit = 10;
+            const limit = parseInt(req.params.limit);
             Parameter.find({},{PP10: 1 , timestamp:1}).sort(sort).limit(limit).then(
                 response=>{ console.log(response) ; res.json(response) ;}
             )

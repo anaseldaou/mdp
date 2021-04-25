@@ -3,7 +3,7 @@ import Title from '../components/TitleComponent';
 //import {RainData_Semaine,RainOptions_Semaine} from '../shared/RainService';
 import {RainData_Annee,RainOptions_Annee,
         RainData_Aujourdhui,RainOptions_Aujourdhui,
-        RainData_Semaine,RainOptions_Semaine} from '../shared/pluvioData';
+        RainData_Semaine,RainOptions_Semaine} from '../mockData/RainService';
 import { VictoryBoxPlot, VictoryChart ,VictoryTheme,VictoryScatter} from 'victory';
 import '../CSS/Dashboard.css'
 
@@ -12,12 +12,13 @@ export default function Rain() {
   return(
     <div className="container">
       <div className="row">
-        <Title title="Rain Data" image="/assets/images/rain-icon.png"/>
+        <Title title="Pluie " image="/assets/images/rain-icon.png"/>
       </div>
+
       <div className="row">
           <div class="col-md-12">
             <div className="card-custom">
-              <h1>Rain Data Aujourd'hui</h1>
+              <h1>Pluie dans les dernières 24h</h1>
               <Chart type="bar" data={RainData_Aujourdhui} options={RainOptions_Aujourdhui} />
             </div>
           </div>
@@ -25,17 +26,17 @@ export default function Rain() {
       <div className="row">
           <div class="col-md-12">
             <div className="card-custom">
-              <h1>Rain Data cette semaine</h1>
+              <h1>Pluie cette semaine</h1>
               <Chart type="bar" data={RainData_Semaine} options={RainOptions_Semaine} />
             </div>
           </div>
           <div className="col-md-12">
             <div className="card-custom">
-              <h1>Rain Data this year</h1>
+              <h1>Pluie cette année</h1>
               <Chart type="radar" data={RainData_Annee} options={RainOptions_Annee} />
             </div>
           </div>
-          <div class="col-md-12">
+          {/* <div class="col-md-12">
               <div className="card-custom">
                 <h1>Precipitations Annee</h1>
                 <VictoryChart>
@@ -59,7 +60,7 @@ export default function Rain() {
                   />
                 </VictoryChart>
               </div>
-          </div>
+          </div> */}
       </div>
     </div>
   );

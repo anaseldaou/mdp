@@ -53,23 +53,23 @@ class Header extends Component {
                             <Collapse isOpen={this.state.isNavOpen} navbar>
                                 <Nav navbar>
                                     <NavItem>
-                                        <NavLink className="nav-link"  to='/home'>Home</NavLink>
+                                        <NavLink className="nav-link"  to='/home'>Acceuil</NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink className="nav-link" to='/about'>About</NavLink>
+                                        <NavLink className="nav-link" to='/about'>A propos</NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink className="nav-link" to='/team'>Team</NavLink>
+                                        <NavLink className="nav-link" to='/team'>Equipe</NavLink>
                                     </NavItem>
                                     <NavItem>
-                                        {this.props.auth.isAuthenticated ? <NavLink className="nav-link" to='/Notes'>My Notes</NavLink>: null}
+                                        {this.props.auth.isAuthenticated ? <NavLink className="nav-link" to='/Notes'>Mes Notes</NavLink>: null}
                                     </NavItem>
                                 </Nav>
                                 <Nav className="ml-auto" navbar>
                                 <NavItem>
                                     { !this.props.auth.isAuthenticated ?
                                         <Button outline onClick={this.toggleModal}>
-                                            <span className="fa fa-sign-in fa-lg"></span> Login
+                                            <span className="fa fa-sign-in fa-lg"></span> S'inscrire
                                             {this.props.auth.isFetching ?
                                                 <span className="fa fa-spinner fa-pulse fa-fw"></span>
                                                 : null
@@ -79,7 +79,7 @@ class Header extends Component {
                                         <div>
                                         <div className="navbar-text mr-3">{this.props.auth.user.username}</div>
                                         <Button outline onClick={this.handleLogout}>
-                                            <span className="fa fa-sign-out fa-lg"></span> Logout
+                                            <span className="fa fa-sign-out fa-lg"></span> Fermer
                                             {this.props.auth.isFetching ?
                                                 <span className="fa fa-spinner fa-pulse fa-fw"></span>
                                                 : null
@@ -108,7 +108,7 @@ class Header extends Component {
                                 <Input type="password" id="password" name="password"
                                     innerRef={(input) => this.password = input}  />
                             </FormGroup>
-                            <Button type="submit" value="submit" color="primary">Login</Button>
+                            <Button type="submit" value="submit" color="primary">S'inscrire</Button>
                         </Form>
                     </ModalBody>
                 </Modal>

@@ -23,7 +23,7 @@ export default function FormDialog({auth}) {
 
     const onHide = (name) => {
         dialogFuncMap[`${name}`](false);
-        console.log("note est " +value);
+        
         postNotesData(value)
     }
 
@@ -39,10 +39,10 @@ export default function FormDialog({auth}) {
     if(auth.isAuthenticated){
         return (
             <div>
-                    <Button label="Write Note"  onClick={() => onClick('displayPosition', 'left')} className="p-button-warning sticky-element" />
-                    <Dialog header="Note to self" visible={displayPosition} position={position} modal style={{ width: '40vmin' }} footer={renderFooter('displayPosition')} onHide={() => onHide('displayPosition')}
+                    <Button label="Ecrire une Note"  onClick={() => onClick('displayPosition', 'left')} className="p-button-warning sticky-element" />
+                    <Dialog header="Note pour soi-même" visible={displayPosition} position={position} modal style={{ width: '40vmin' }} footer={renderFooter('displayPosition')} onHide={() => onHide('displayPosition')}
                         draggable={true} resizable={true} >
-                        <p className="p-m-0">This is a space where you can add your notes about environmental variables. <br></br>You can track your notes in the notes pages</p>
+                        <p className="p-m-0">C'est un espace où vous pouvez ajouter vos notes sur les variables environnementales.<br></br>Vous pouvez suivre vos notes dans les pages de notes</p>
                         <InputTextarea rows={8} cols={30} value={value} onChange={(e) => setValue(e.target.value)}/>
                     </Dialog>
             </div>

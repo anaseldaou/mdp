@@ -22,7 +22,6 @@ export function getNotesData()
 export function postNotesData(note) 
 {
     const bearer = 'Bearer ' + localStorage.getItem('token');
-    console.log(note);
     return fetch(baseUrl+'users/notes',
     {
         method: "POST",

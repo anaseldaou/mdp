@@ -18,8 +18,6 @@ class Notes extends Component {
  }
   render(){
     const user_notes= this.renderNote();
-    console.log("HELLO");
-    console.log(user_notes);
   return(
     <div className="container">
       <div className="row">

@@ -7,7 +7,7 @@ import { Knob } from "primereact/knob";
 import {Component} from 'react';
 import {GazLabels} from  '../Labels/GazLabels';
 
-import {Avg_Co2_Aujourdhui,Avg_So2_Aujourdhui,Avg_No2_Aujourdhui} from '../shared/GazService'
+import {Avg_So2_Aujourdhui,Avg_Co2_Aujourdhui,Avg_No2_Aujourdhui} from '../mockData/GazService';
 
 
 export default function KnobCom(){
@@ -19,7 +19,7 @@ export default function KnobCom(){
         <br></br>
         <div>
           <h4><bold>CO2</bold></h4>
-          <Knob value={Avg_Co2_Aujourdhui} valueTemplate={"{value}ppm"} readOnly />
+          <Knob min={0} max={800} value={Avg_Co2_Aujourdhui} valueTemplate={"{value}ppm"} readOnly />
         </div>
         <div>
           <h4><bold>SO2</bold></h4>

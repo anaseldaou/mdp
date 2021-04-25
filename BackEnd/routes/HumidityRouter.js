@@ -5,14 +5,15 @@ const Parameter = require('../models/Parameters');
 
 const HumidityRouter = express.Router();
 
-var  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 
-HumidityRouter.route('/:echelle')
+HumidityRouter.route('/:echelle/:limit')
 .get((req,res,next) => {
+    var limite = req.params.limit == undefined ? 1500 : parseInt(req.params.limit);
     switch(req.params.echelle){
         case "perHour" :
             Parameter.aggregate([
+                {$sort : {_id:1}},
                 { $group : { 
                 _id : { year: { $year : "$timestamp" },
                         month: { $month : "$timestamp" },
@@ -25,9 +26,7 @@ HumidityRouter.route('/:echelle')
                 min: {$min:"$Humidity"},
                 max : {$max:"$Humidity"}},
         
-            },
-            {$limit:24},
-            {$sort : {_id:1}}
+            },{$limit: limite},
              //day: { $dayOfMonth : "$timestamp" }  ,
              //hour: {$hour : "$timestamp"}  }}
             ])
@@ -57,12 +56,12 @@ HumidityRouter.route('/:echelle')
                         week:{$week : "$timestamp"},
                         day: { $dayOfMonth : "$timestamp" }}, 
                 avg : {$avg:"$Humidity"},
-                sum : {$sum:"$Humidity"}, //equivalent Pluie_cumulee par 24 heure
+                sum : {$sum:"$Humidity"}, //equivalent Pluie_cumulee par parseInt(req.params.echelle) heure
                 min: {$min:"$Humidity"},
                 max : {$max:"$Humidity"}},
                 
             },
-            {$limit:7},
+            {$limit: limite},
             {$sort : {_id:1}}
             ])
             .then(response => {
@@ -95,7 +94,7 @@ HumidityRouter.route('/:echelle')
                 
             }
             ,
-            {$limit:7},
+            {$limit: limite},
             {$sort : {_id:1}}
             ])
             .then(response => {
@@ -122,7 +121,7 @@ HumidityRouter.route('/:echelle')
                         sum : {$sum:"$Humidity"},
                         min: {$min:"$Humidity"},
                         max : {$max:"$Humidity"}}},
-                        {$limit:12},
+                        {$limit: limite},
                         {$sort : {_id:1}}
             ])
             .then(response => {
@@ -167,10 +166,10 @@ HumidityRouter.route('/:echelle')
             res.setHeader('Content-Type', 'application/json');
             // define an empty query document
             const query = {};
-            // sort in descending (-1) order by length
-            const sort = { length: 1 };
-            const limit = 10;
-            Parameter.find({},{Humidity: 1 , timestamp:1}).sort(sort).limit(limit).then(
+            // sort in descending (-parseInt(req.params.limit)) order by length
+            const sort = { _id:1 };
+            const limit = parseInt(req.params.limit);
+            Parameter.find({},{Humidity:1 ,timestamp:1}).sort(sort).limit(limit).then(
                 response=>{ console.log(response) ; res.json(response) ;}
             )
             break;

@@ -4,21 +4,21 @@ var router = express.Router();
 
 var nodemailer = require('nodemailer');
 
-console.log('1');
+console.log('parseInt(req.params.limit)');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log('1');
+  console.log('parseInt(req.params.limit)');
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'mdpolife2021@gmail.com',
-      pass: 'Mdp@olife2021'
+      user: 'mdpolife202parseInt(req.params.limit)@gmail.com',
+      pass: 'Mdp@olife202parseInt(req.params.limit)'
     }
   });
   console.log('2');
   
   var mailOptions = {
-    from: 'mdpolife2021@gmail.com',
+    from: 'mdpolife202parseInt(req.params.limit)@gmail.com',
     to: 'anas.eldaou@gmail.com',
     subject: 'Sending Email using Node.js',
     text: 'That was easy!'

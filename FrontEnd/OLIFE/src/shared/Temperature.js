@@ -1,6 +1,9 @@
 import {temperatureLabels} from '../Labels/TemperatureLabels'
+import {parseResponseDay , parsePromiseDay} from '../service/methode';
+import {getTemperatureData} from '../service/TemperatureService';
+import {getData} from '../service/getData';
 
-export var Avg_Temperature_Aujourdui =  28;
+//export var Avg_Temperature_Aujourdui =  parsePromiseDay(getData("Temperature","perDay/1"))[1][0];
 export var Avg_Humidite_Aujourdui =89;
 
 //Annee
