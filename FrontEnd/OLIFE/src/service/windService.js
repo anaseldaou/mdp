@@ -1,5 +1,4 @@
-
-import { baseUrl } from 'C:/Users/win10/Desktop/mdp/FrontEnd/OLIFE/src/shared/baseUrl.js';
+import { baseUrl } from '../shared/baseUrl.js';
 
 export function getWindDirData(echelle) 
 {
