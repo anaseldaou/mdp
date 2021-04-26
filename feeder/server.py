@@ -1,18 +1,17 @@
 import socket
 
-HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
-PORT = 22        # Port to listen on (non-privileged ports are > 1023)
+HOST = '212.98.137.211'  # Standard loopback interface address (localhost)
+PORT = 9000        # Port to listen on (non-privileged ports are > 1023)
 
 
 import requests
-url = 'http://localhost:3030/parameter'
 import pymongo
 myClient =pymongo.MongoClient("mongodb+srv://Cyril:OLIFE2021@olife.7ffdi.mongodb.net/MDP?retryWrites=true&w=majority")
 db = myClient.test
 mydb = myClient['MDP']
 mycol = mydb['mockData']
 
-allParameter=True
+allParameter=False
 
 expectedParameter=["Id",
     "timestamp",
@@ -43,6 +42,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
     while True:
+        print("Waiting for connections...")
         conn, addr = s.accept()
         with conn:
             print('Connected by', addr)
