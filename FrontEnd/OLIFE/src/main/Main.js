@@ -11,16 +11,19 @@ import Rain from '../pages/Rain'
 import Gaz from '../pages/Gaz'
 import Wind from '../pages/Wind'
 import { connect} from 'react-redux';
-import { loginUser, logoutUser} from '../redux/ActionCreators';
+import { loginUser, logoutUser} from '../redux/SignInCreators';
 import '../CSS/About.css';
 import '../CSS/Dashboard.css';
 import '../CSS/SideNav.css';
 
+import {fetchAvgTempPerSemaine,fetchAvgTempAujourdhui} from '../redux/TemperatureCreators';
+
 const mapStateToProps = state => {
     return {
       auth: state.auth,
-      isAuthenticated:state.auth.isAuthenticated,
-      about_data:state.about_data
+      //isAuthenticated:state.auth.isAuthenticated,
+      about_data:state.about_data,
+      temperature:state.temperature,
     }
 }
 
@@ -28,6 +31,8 @@ const mapDispatchToProps = (dispatch) => ({
 
   loginUser: (creds) => dispatch(loginUser(creds)),
   logoutUser: () => dispatch(logoutUser()),
+  fetchAvgTempPerSemaine : (parameter,echelle) => dispatch(fetchAvgTempPerSemaine(parameter,echelle)),
+  fetchAvgTempAujourdhui:(parameter,echelle) => dispatch(fetchAvgTempAujourdhui(parameter,echelle))
 });
 
 
@@ -36,6 +41,12 @@ class Main extends Component {
   constructor(props){
     super(props); 
 
+  }
+
+  componentDidMount()
+  {
+    this.props.fetchAvgTempPerSemaine("Temperature","perDay/7");
+    this.props.fetchAvgTempAujourdhui("Temperature","perHour/24");
   }
 
 
@@ -50,7 +61,9 @@ class Main extends Component {
         <Switch>
         <Route path="/home" component={() => <Home auth={this.props.auth} />} />
         <Route exact path="/about" component={About}/>
-        <Route exact path="/temperature" component={Temperature}/>
+        <Route exact path="/temperature" component={() => <Temperature TemperatureData_Semaine={this.props.temperature.TemperatureData_Semaine} 
+                                                                        TemperatureData_Aujourdhui={this.props.temperature.TemperatureData_Aujourdhui}/>} />
+        
         <Route exact path="/notes" component={Notes}/>
         <Route exact path="/team" component={Team}/>
         <Route exact path="/rain" component={Rain}/>

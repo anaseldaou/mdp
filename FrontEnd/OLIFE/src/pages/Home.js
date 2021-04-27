@@ -9,7 +9,10 @@ import {Avg_WindSpeed_Ajourdhui,WindData_Semaine, WindOptions_Semaine} from '../
 import {Avg_Rain_Aujourdhui,RainData_Aujourdhui,RainOptions_Aujourdhui} from '../mockData/RainService'
 import {Data_Intensity} from '../mockData/IntensiteService'
 import SideNav from '../components/SideNavComponent'
-import { Button } from 'primereact/button';
+import { Button } from 'primereact/button'
+
+
+//import { Avg_Temperature_Aujourdui} from '../shared/Temperature';
 
 
 
@@ -18,10 +21,12 @@ class Home extends Component{
     super(props);
     this.state={
       isSignedIn:false,
+      //Avg_Temperature_Aujourdui:0
     }
     this.ToWhite = this.ToWhite.bind(this);
     this.ToBlack = this.ToBlack.bind(this);
 
+    console.log("first respone is " + Avg_Temperature_Aujourdui);
   }
 
   ToWhite() {
@@ -33,6 +38,12 @@ class Home extends Component{
     document.body.style.backgroundColor = "black";
     document.body.style.color = "rgba(250,192,46,255)";
   }
+
+
+//   componentDidMount(){
+//     this.setState({Avg_Temperature_Aujourdui:Avg_Temperature_Aujourdui});
+//     console.log("second respone is " + Avg_Temperature_Aujourdui);
+// }
 
 
 render(){

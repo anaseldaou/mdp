@@ -1,7 +1,8 @@
+import {Component} from "react";
 import { Chart } from 'primereact/chart';
 import {TemperatureData_Annee, TemperatureOptions_Annee,
-     TemperatureData_Semaine, TemperatureOptions_Semaine,
-      TemperatureData_Aujourdhui, TemperatureOptions_Aujourdhui} from '../mockData/TemperatureService';
+     /*TemperatureData_Semaine,*/ TemperatureOptions_Semaine,
+     /* TemperatureData_Aujourdhui,*/ TemperatureOptions_Aujourdhui} from '../mockData/TemperatureService';
 import { temperatureLabels } from '../Labels/TemperatureLabels';
 import '../CSS/Dashboard.css'
 import Title from '../components/TitleComponent';
@@ -9,7 +10,18 @@ import Title from '../components/TitleComponent';
 import { VictoryBoxPlot, VictoryChart } from 'victory';
 
 
-export default function Temperature(){
+export default function Temperature(props){
+  //   constructor(props)
+  //   {
+  //     super(props);
+  //   }
+  //   componentDidMount(){
+  //     // this.setState({TemperatureData_Annee: TemperatureData_Annee,
+  //     //                 TemperatureData_Semaine:TemperatureData_Semaine,
+  //     //                 TemperatureData_Aujourdhui:TemperatureData_Aujourdhui
+  //     //               });
+  // }
+  //  render(){
       return(
         <div  className="container">
           <div className="row">
@@ -21,7 +33,7 @@ export default function Temperature(){
             <div class="col-md-12">
                 <div className="card-custom">
                     <h1>{temperatureLabels.temperature_aujourdhui}</h1>
-                    <Chart type="line" data={TemperatureData_Aujourdhui} options={TemperatureOptions_Aujourdhui}/>
+                    <Chart type="line" data={props.TemperatureData_Aujourdhui} options={TemperatureOptions_Aujourdhui}/>
                 </div>
             </div>
              <div class="col-md-6">
@@ -29,7 +41,7 @@ export default function Temperature(){
               <br></br>
               <div className="card-custom">
                   <h1>{temperatureLabels.temperature_semaine}</h1>
-                  <Chart type="line" data={TemperatureData_Semaine} options={TemperatureOptions_Semaine} />
+                  <Chart type="line" data={props.TemperatureData_Semaine} options={TemperatureOptions_Semaine} />
               </div>
             </div>
             <div class="col-md-6">
@@ -105,4 +117,5 @@ export default function Temperature(){
           </div>
         </div>
       );
+                  
 }

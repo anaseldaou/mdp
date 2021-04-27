@@ -17,7 +17,7 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            <Main auth={this.props.auth}/>
+            <Main auth={this.props.auth} temperature={this.props.temperature}/>
           </div>
         </BrowserRouter>
       </Provider>
