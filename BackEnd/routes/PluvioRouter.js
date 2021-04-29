@@ -12,20 +12,20 @@ PluvioRouter.route('/:echelle/:limit')
     switch(req.params.echelle){
         case "perHour" :
             Parameter.aggregate([
+                {$sort : {'timestamp':1}},
                 { $group : { 
                 _id : { year: { $year : "$timestamp" },
                         month: { $month : "$timestamp" },
                         week:{$week : "$timestamp"},
                         day: { $dayOfMonth : "$timestamp" },
-                        hour: {$hour : "$timestamp"}},
-                         
+                        hour: {$hour : "$timestamp"},
+                    },    
                 avg : {$avg:"$Pluvio"},
                 sum : {$sum:"$Pluvio"}, //equivalent Pluie_cumulee par Heure
                 min: {$min:"$Pluvio"},
                 max : {$max:"$Pluvio"}},
             },
-            {$limit: parseInt(req.params.limit)},
-            {$sort : {_id:1}}
+            {$limit: parseInt(req.params.limit)}
              //day: { $dayOfMonth : "$timestamp" }  ,
              //hour: {$hour : "$timestamp"}  }}
             ])

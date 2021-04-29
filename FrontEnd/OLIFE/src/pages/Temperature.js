@@ -1,6 +1,6 @@
 import {Component} from "react";
 import { Chart } from 'primereact/chart';
-import {TemperatureData_Annee, TemperatureOptions_Annee,
+import {/*TemperatureData_Annee*/ TemperatureOptions_Annee,
      /*TemperatureData_Semaine,*/ TemperatureOptions_Semaine,
      /* TemperatureData_Aujourdhui,*/ TemperatureOptions_Aujourdhui} from '../mockData/TemperatureService';
 import { temperatureLabels } from '../Labels/TemperatureLabels';
@@ -111,7 +111,7 @@ export default function Temperature(props){
                   <br></br>
                   <div className="card-custom">
                     <h1>{temperatureLabels.temperature_annee}</h1>
-                    <Chart type="line" data={TemperatureData_Annee} options={TemperatureOptions_Annee} />
+                    <Chart type="line" data={props.TemperatureData_Annee} options={TemperatureOptions_Annee} />
                   </div>
               </div>
           </div>

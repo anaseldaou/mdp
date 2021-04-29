@@ -1,14 +1,12 @@
 import {Component} from 'react'
 import { Chart } from 'primereact/chart';
-import {WindData_Semaine, WindOptions_Semaine,
-    WindData_Annee,WindOptions_Annee,
-    WindData_Mois,WindOptions_Mois} from '../mockData/WindService';
+import {WindOptions_Semaine,WindOptions_Annee,WindOptions_Mois} from '../mockData/WindService';
 import CardExample from '../components/CardComponent'
 import Title from '../components/TitleComponent';
 
 
 
-export default function Wind(){
+export default function Wind(props){
     return(
       <div className="container">
         <div className="row">
@@ -25,7 +23,7 @@ export default function Wind(){
           <div className="col-md-12">
             <div className="card-custom">
                 <h1>Vitesse du Vent cette semaine</h1>
-                <Chart type="radar" data={WindData_Semaine} options={WindOptions_Semaine} />
+                <Chart type="radar" data={props.WindData_Semaine} options={WindOptions_Semaine} />
             </div>
           </div>
         </div>
@@ -33,7 +31,7 @@ export default function Wind(){
           <div className="col-md-12">
             <div className="card-custom">
                 <h1>Vitesse du Vent ce mois</h1>
-                <Chart type="line" data={WindData_Mois} options={WindOptions_Mois} />
+                <Chart type="line" data={props.WindData_Mois} options={WindOptions_Mois} />
             </div>
           </div>
         </div>
@@ -41,7 +39,7 @@ export default function Wind(){
           <div className="col-md-12">
             <div className="card-custom">
               <h1>Vitesse du Vent cette annee</h1>
-              <Chart type="line" data={WindData_Annee} options={WindOptions_Annee} />
+              <Chart type="line" data={props.WindData_Annee} options={WindOptions_Annee} />
             </div>
           </div>
         </div>

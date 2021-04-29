@@ -3,7 +3,7 @@ import { baseUrl } from '../shared/baseUrl';
 var  monthsOfYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 var daysOfWeek=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 
-export const fetchAvgTempPerSemaine = (parameter,echelle) => (dispatch) => {
+export const fetchAvgPluvioPerSemaine = (parameter,echelle) => (dispatch) => {
     var days = [];
     var data = [];
     var key;
@@ -31,25 +31,25 @@ export const fetchAvgTempPerSemaine = (parameter,echelle) => (dispatch) => {
             data.push(listOfJSON[key].avg);
             }
             dispatch(receivedAvgTempSemaine(data,days));
-            console.log("AVG_TEMP_PER_SEMAINE IS " + data)            
+            console.log("AVG_PLUVIO_PER_SEMAINE IS " + data)            
         })
-        .catch(error => dispatch(requestTempFailed(error.message)));
+        .catch(error => dispatch(requestFailed(error.message)));
 }
 
 
 
 export const receivedAvgTempSemaine = (data,days) => ({
-    type: ActionTypes.RECEIVED_AVG_TEMP_PER_SEMAINE,
+    type: ActionTypes.RECEIVED_AVG_PLUVIO_PER_SEMAINE,
     data: data,
     day:days
 });
 
 
-export const fetchAvgTempAujourdhui = (parameter,echelle) => (dispatch) => {
+export const fetchAvgPluvioAujourdhui = (parameter,echelle) => (dispatch) => {
     var hours = [];
     var data = [];
     var key;
-    return fetch(baseUrl+'parameter/'+parameter+'/'+echelle)  //fetch(baseUrl+'Temperature/perHour/7')
+    return fetch(baseUrl+'parameter/'+parameter+'/'+echelle)  //fetch(baseUrl+'Pluvio/perHour/7')
         .then(response => {
             if (response.ok) {
                 return response;
@@ -72,21 +72,21 @@ export const fetchAvgTempAujourdhui = (parameter,echelle) => (dispatch) => {
             hours.push(listOfJSON[key].hour+':00');
             data.push(listOfJSON[key].avg);
             }
-            dispatch(receivedAvgTempAujourdhui(data,hours));
-            console.log("AVG_TEMP_AUJOURDHUI IS " + data)            
+            dispatch(receivedAvgPluvioAujourdhui(data,hours));
+            console.log("AVG_PLUVIO_AUJOURDHUI IS " + data)            
         })
-        .catch(error => dispatch(requestTempFailed(error.message)));
+        .catch(error => dispatch(requestFailed(error.message)));
 }
 
 
-export const receivedAvgTempAujourdhui = (data,hours) => ({
-    type: ActionTypes.RECEIVED_AVG_TEMP_AUJOURDHUI,
+export const receivedAvgPluvioAujourdhui = (data,hours) => ({
+    type: ActionTypes.RECEIVED_AVG_PLUVIO_AUJOURDHUI,
     data: data,
     hours:hours
 });
 
 
-export const fetchAvgTempPerAnnee = (parameter,echelle) => (dispatch) => {
+export const fetchAvgPluvioPerAnnee = (parameter,echelle) => (dispatch) => {
     var months = [];
     var data = [];
     var key;
@@ -114,19 +114,19 @@ export const fetchAvgTempPerAnnee = (parameter,echelle) => (dispatch) => {
                 data.push(listOfJSON[key].avg);
             }
             dispatch(receivedAvgTempPerAnnee(data,months));
-            console.log("AVG_TEMP_PER_ANNEE IS " + data)            
+            console.log("AVG_PLUVIO_PER_ANNEE IS " + data)            
         })
-        .catch(error => dispatch(requestTempFailed(error.message)));
+        .catch(error => dispatch(requestFailed(error.message)));
 }
 
 
 export const receivedAvgTempPerAnnee = (data,months) => ({
-    type: ActionTypes.RECEIVED_AVG_TEMP_PER_ANNEE,
+    type: ActionTypes.RECEIVED_AVG_PLUVIO_PER_ANNEE,
     data: data,
     months:months
 });
 
-export const requestTempFailed = (errmess) => ({
-    type: ActionTypes.REQUEST_TEMP_FAILED,
+export const requestFailed = (errmess) => ({
+    type: ActionTypes.REQUEST_PLUVIO_FAILED,
     payload: errmess
 });

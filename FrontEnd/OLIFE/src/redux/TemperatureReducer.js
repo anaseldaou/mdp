@@ -24,6 +24,16 @@ export const Temperature = (state = {
                                         borderColor: 'blue'
                                     },
                                 ]
+                              },
+    TemperatureData_Annee : {
+                                labels: [],
+                                datasets: [
+                                    {
+                                        label: temperatureLabels.temperature_annee,
+                                        data: [],
+                                        borderColor:"blue"
+                                    }
+                                ]
                               }
     
     }, action) => {
@@ -46,13 +56,25 @@ export const Temperature = (state = {
                 labels: action.hours,
                 datasets: [
                             {
-                                label: temperatureLabels.temperature_semaine,
+                                label: temperatureLabels.temperature_aujourdhui,
                                 data: action.data,
                                 fill: false,
                                 borderColor: 'blue'
                             }
                         ]       
                 }}
+        case ActionTypes.RECEIVED_AVG_TEMP_PER_ANNEE:
+            return {...state,TemperatureData_Annee : {
+                labels: action.months,
+                datasets: [
+                    {
+                        label: temperatureLabels.temperature_annee,
+                        data: action.data,
+                        borderColor:"blue"
+                    }
+                ]
+              }
+            }
 
         default:
             return state;

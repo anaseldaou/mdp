@@ -1,14 +1,14 @@
 import { Chart } from 'primereact/chart';
 import Title from '../components/TitleComponent';
 //import {RainData_Semaine,RainOptions_Semaine} from '../shared/RainService';
-import {RainData_Annee,RainOptions_Annee,
-        RainData_Aujourdhui,RainOptions_Aujourdhui,
-        RainData_Semaine,RainOptions_Semaine} from '../mockData/RainService';
+import {/*RainData_Annee*/RainOptions_Annee,
+        /*RainData_Aujourdhui0*/RainOptions_Aujourdhui,
+        /*RainData_Semaine,*/RainOptions_Semaine} from '../mockData/RainService';
 import { VictoryBoxPlot, VictoryChart ,VictoryTheme,VictoryScatter} from 'victory';
 import '../CSS/Dashboard.css'
 
 
-export default function Rain() {
+export default function Rain(props) {
   return(
     <div className="container">
       <div className="row">
@@ -19,7 +19,7 @@ export default function Rain() {
           <div class="col-md-12">
             <div className="card-custom">
               <h1>Pluie dans les dernières 24h</h1>
-              <Chart type="bar" data={RainData_Aujourdhui} options={RainOptions_Aujourdhui} />
+              <Chart type="bar" data={props.RainData_Aujourdhui} options={RainOptions_Aujourdhui} />
             </div>
           </div>
       </div>
@@ -27,13 +27,13 @@ export default function Rain() {
           <div class="col-md-12">
             <div className="card-custom">
               <h1>Pluie cette semaine</h1>
-              <Chart type="bar" data={RainData_Semaine} options={RainOptions_Semaine} />
+              <Chart type="bar" data={props.RainData_Semaine} options={RainOptions_Semaine} />
             </div>
           </div>
           <div className="col-md-12">
             <div className="card-custom">
               <h1>Pluie cette année</h1>
-              <Chart type="radar" data={RainData_Annee} options={RainOptions_Annee} />
+              <Chart type="radar" data={props.RainData_Annee} options={RainOptions_Annee} />
             </div>
           </div>
           {/* <div class="col-md-12">
