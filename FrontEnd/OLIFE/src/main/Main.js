@@ -121,17 +121,18 @@ class Main extends Component {
         <Switch>
         <Route path="/home" component={() => <Home auth={this.props.auth} temperature={this.props.temperature} wind={this.props.wind} pluvio={this.props.pluvio} gaz={this.props.gaz} />} />
         <Route exact path="/about" component={About}/>
-        <Route exact path="/temperature" component={() => <Temperature TemperatureData_Semaine={this.props.temperature.TemperatureData_Semaine} 
+        <Route exact path="/temperature" component={() => <Temperature auth={this.props.auth} TemperatureData_Semaine={this.props.temperature.TemperatureData_Semaine} 
                                                                         TemperatureData_Aujourdhui={this.props.temperature.TemperatureData_Aujourdhui}
                                                                         TemperatureData_Annee={this.props.temperature.TemperatureData_Annee}/>} />
         
         <Route exact path="/notes" component={Notes}/>
         <Route exact path="/team" component={Team}/>
-        <Route exact path="/rain" component={() => <Rain RainData_Semaine={this.props.pluvio.RainData_Semaine} 
+        <Route exact path="/rain" component={() => <Rain auth={this.props.auth} RainData_Semaine={this.props.pluvio.RainData_Semaine} 
                                                                         RainData_Aujourdhui={this.props.pluvio.RainData_Aujourdhui}
                                                                         RainData_Annee={this.props.pluvio.RainData_Annee}/>}/>
-        <Route exact path="/gaz" component={() => <Gaz gaz={this.props.gaz}/>}/>
-        <Route exact path="/wind" component={() => <Wind WindData_Semaine={this.props.wind.WindData_Semaine} 
+        <Route exact path="/gaz" component={() => <Gaz auth={this.props.auth} gaz={this.props.gaz}/>}/>
+        
+        <Route exact path="/wind" component={() => <Wind  auth={this.props.auth} WindData_Semaine={this.props.wind.WindData_Semaine} 
                                                                         WindData_Mois={this.props.wind.WindData_Mois}
                                                                         WindData_Annee={this.props.wind.WindData_Annee}/>}/>
         <Redirect to="/home"/>

@@ -3,11 +3,14 @@ import { Chart } from 'primereact/chart';
 import {WindOptions_Semaine,WindOptions_Annee,WindOptions_Mois} from '../mockData/WindService';
 import CardExample from '../components/CardComponent'
 import Title from '../components/TitleComponent';
+import SideNav from '../components/SideNavComponent';
 
 
 
 export default function Wind(props){
     return(
+      <div className="container-fluid">
+        <SideNav auth={props.auth} />
       <div className="container">
         <div className="row">
           <Title title="Vitesse du Vent" image="/assets/images/wind_data.webp"/>
@@ -43,6 +46,7 @@ export default function Wind(props){
             </div>
           </div>
         </div>
+      </div>
       </div>
     );
 }

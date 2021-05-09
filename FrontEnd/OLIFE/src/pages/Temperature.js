@@ -6,6 +6,7 @@ import {/*TemperatureData_Annee*/ TemperatureOptions_Annee,
 import { temperatureLabels } from '../Labels/TemperatureLabels';
 import '../CSS/Dashboard.css'
 import Title from '../components/TitleComponent';
+import SideNav from '../components/SideNavComponent';
 
 import { VictoryBoxPlot, VictoryChart } from 'victory';
 
@@ -23,6 +24,8 @@ export default function Temperature(props){
   // }
   //  render(){
       return(
+        <div className="container-fluid">
+        <SideNav auth={props.auth} />
         <div  className="container">
           <div className="row">
             <Title title="Temperature" image="/assets/images/temperatureIcon.webp"/>
@@ -115,7 +118,7 @@ export default function Temperature(props){
                   </div>
               </div>
           </div>
-        </div>
+        </div></div>
       );
                   
 }

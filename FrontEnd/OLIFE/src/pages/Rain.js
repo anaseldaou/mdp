@@ -4,12 +4,18 @@ import Title from '../components/TitleComponent';
 import {/*RainData_Annee*/RainOptions_Annee,
         /*RainData_Aujourdhui0*/RainOptions_Aujourdhui,
         /*RainData_Semaine,*/RainOptions_Semaine} from '../mockData/RainService';
+
+        import SideNav from '../components/SideNavComponent';
 import { VictoryBoxPlot, VictoryChart ,VictoryTheme,VictoryScatter} from 'victory';
 import '../CSS/Dashboard.css'
 
 
+
+
 export default function Rain(props) {
   return(
+    <div className="container-fluid">
+    <SideNav auth={props.auth} />
     <div className="container">
       <div className="row">
         <Title title="Pluie " image="/assets/images/rain-icon.png"/>
@@ -62,6 +68,7 @@ export default function Rain(props) {
               </div>
           </div> */}
       </div>
+    </div>
     </div>
   );
 }

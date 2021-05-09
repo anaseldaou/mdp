@@ -1,22 +1,25 @@
 import {Component} from 'react'
-import {CO2Data_Cette_Annee,CO2Options_Cette_Annee,
-  SO2Data_Cette_Annee,SO2Options_Cette_Annee,
-      CO2Data_Semaine,GazOptions_Semaine,
-      SO2Data_Semaine,
-      GazOptions_Derniers_12_Mois,GazData_Derniers_12_Mois,
-      GazData_Particule_Micron_Semaine,GazOptions_Particule_Micron_Semaine,
-      GazData_Particule_Micron_Mois,GazOptions_Particule_Micron_Mois } from '../mockData/GazService';
+import {CO2Options_Cette_Annee,
+  SO2Options_Cette_Annee,
+      GazOptions_Semaine,
+      GazOptions_Particule_Micron_Semaine,
+      GazOptions_Particule_Micron_Mois } from '../mockData/GazService';
+
 
 import { Chart } from 'primereact/chart';
 import Title from '../components/TitleComponent'
 import {GazLabels} from '../Labels/GazLabels';
+import SideNav from '../components/SideNavComponent';
 import '../CSS/Dashboard.css'
+
 
 import { VictoryBoxPlot, VictoryChart } from 'victory';
 
 
 export default function Gaz(props){
   return(
+    <div className="container-fluid">
+      <SideNav auth = {props.auth}/>
     <div className="container">
         <div className="row">
         <Title title={GazLabels.title} image="/assets/images/gas.png"/>
@@ -124,6 +127,7 @@ export default function Gaz(props){
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
