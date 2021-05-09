@@ -17,7 +17,8 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            <Main auth={this.props.auth} temperature={this.props.temperature} pluvio={this.props.pluvio} wind={this.props.wind}/>
+            <Main auth={this.props.auth} temperature={this.props.temperature} pluvio={this.props.pluvio} wind={this.props.wind} 
+            gaz={this.props.gaz}/>
           </div>
         </BrowserRouter>
       </Provider>

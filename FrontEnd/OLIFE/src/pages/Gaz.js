@@ -1,10 +1,12 @@
 import {Component} from 'react'
 import {CO2Data_Cette_Annee,CO2Options_Cette_Annee,
   SO2Data_Cette_Annee,SO2Options_Cette_Annee,
-      CO2Data_Semaine,GazOptions_Semaine,SO2Data_Semaine,
+      CO2Data_Semaine,GazOptions_Semaine,
+      SO2Data_Semaine,
       GazOptions_Derniers_12_Mois,GazData_Derniers_12_Mois,
       GazData_Particule_Micron_Semaine,GazOptions_Particule_Micron_Semaine,
       GazData_Particule_Micron_Mois,GazOptions_Particule_Micron_Mois } from '../mockData/GazService';
+
 import { Chart } from 'primereact/chart';
 import Title from '../components/TitleComponent'
 import {GazLabels} from '../Labels/GazLabels';
@@ -13,7 +15,7 @@ import '../CSS/Dashboard.css'
 import { VictoryBoxPlot, VictoryChart } from 'victory';
 
 
-export default function Gaz(){
+export default function Gaz(props){
   return(
     <div className="container">
         <div className="row">
@@ -25,7 +27,7 @@ export default function Gaz(){
         <div className="col-md-6">
           <div className="card-custom">
             <h1>{GazLabels.CO2_semaine}</h1>
-            <Chart type="horizontalBar" data={CO2Data_Semaine} options={GazOptions_Semaine} />
+            <Chart type="horizontalBar" data={props.gaz.CO2Data_Semaine} options={GazOptions_Semaine} />
           </div>
           
         </div>
@@ -33,7 +35,7 @@ export default function Gaz(){
         <div className="col-md-6">
           <div className="card-custom">
             <h1>{GazLabels.SO2_semaine}</h1>
-            <Chart type="horizontalBar" data={SO2Data_Semaine} options={GazOptions_Semaine} />
+            <Chart type="horizontalBar" data={props.gaz.SO2Data_Semaine} options={GazOptions_Semaine} />
           </div>
           
         </div>
@@ -41,14 +43,14 @@ export default function Gaz(){
         <div className="col-md-6">
           <div className="card-custom">
             <h1>{GazLabels.CO2_Cette_Anne}</h1>
-            <Chart type="bar" data={CO2Data_Cette_Annee} options={CO2Options_Cette_Annee} />
+            <Chart type="bar" data={props.gaz.CO2Data_Cette_Annee} options={CO2Options_Cette_Annee} />
           </div>
         </div>
 
         <div className="col-md-6">
           <div className="card-custom">
             <h1>{GazLabels.SO2_Cette_Anne}</h1>
-            <Chart type="bar" data={SO2Data_Cette_Annee} options={SO2Options_Cette_Annee} />
+            <Chart type="bar" data={props.gaz.SO2Data_Cette_Annee} options={SO2Options_Cette_Annee} />
           </div>
         </div>
 
@@ -111,14 +113,14 @@ export default function Gaz(){
         <div className="col-md-6">
           <div className="card-custom">
             <h1>{GazLabels.micron_semaine}</h1>
-            <Chart type="doughnut" data={GazData_Particule_Micron_Semaine} options={GazOptions_Particule_Micron_Semaine} />
+            <Chart type="doughnut" data={props.gaz.GazData_Particule_Micron_Semaine} options={GazOptions_Particule_Micron_Semaine} />
           </div>
         </div>
 
         <div className="col-md-6">
           <div className="card-custom">
             <h1>{GazLabels.micron_mois}</h1>
-            <Chart type="pie" data={GazData_Particule_Micron_Mois} options={GazOptions_Particule_Micron_Mois} />
+            <Chart type="pie" data={props.gaz.GazData_Particule_Micron_Mois} options={GazOptions_Particule_Micron_Mois} />
           </div>
         </div>
       </div>

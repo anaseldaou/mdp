@@ -106,8 +106,6 @@ const ParameterSchema = new Schema(
                 required: true,
                 default : null
             }
-    
-    
         }
         ,
          {timestamps: true});

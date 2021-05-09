@@ -17,9 +17,6 @@ class Header extends Component {
         this.handleLogout = this.handleLogout.bind(this);
     }
 
-    sleep(milliseconds){
-        return new Promise(resolve => setTimeout(resolve, milliseconds))
-      }
 
     toggleNav() {
         this.setState({
@@ -34,9 +31,13 @@ class Header extends Component {
     }
 
     handleLogin(event) {
+        event.preventDefault();
         this.props.loginUser({username: this.username.value, password: this.password.value});
         this.toggleModal();
-        event.preventDefault();
+        if (this.props.auth.isAuthenticated == false)
+        {
+            this.toggleModal();
+        }
     }
 
     handleLogout() {

@@ -6,6 +6,7 @@ import {Auth} from './auth';
 import {Temperature} from './TemperatureReducer';
 import {Pluvio} from './PluvioReducer';
 import {Wind} from './WindSpeedReducer';
+import {Gaz} from './GazReducer';
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -13,8 +14,8 @@ export const ConfigureStore = () => {
             auth: Auth,
             temperature : Temperature,
             pluvio : Pluvio,
-            wind:Wind
-
+            wind:Wind,
+            gaz:Gaz
         }),
         applyMiddleware(thunk, logger)
     );

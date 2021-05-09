@@ -36,7 +36,9 @@ export const Wind = (state = {
                 borderColor: '#42A5F5'
             }
         ]
-      }}, action) => {
+      },
+      Avg_WindSpeed_Ajourdhui : null
+     }, action) => {
     switch(action.type) {
         case ActionTypes.RECEIVED_AVG_WINDSPEED_PER_SEMAINE:
             return {...state,  WindData_Semaine : {
@@ -77,6 +79,8 @@ export const Wind = (state = {
                     }
                 ]
               }}
+              case ActionTypes.RECEIVED_AVG_WINDSPEED_AUJOURDHUI:
+                return {...state,Avg_WindSpeed_Ajourdhui:action.data}
 
         default:
             return state;

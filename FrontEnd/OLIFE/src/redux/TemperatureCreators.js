@@ -126,6 +126,83 @@ export const receivedAvgTempPerAnnee = (data,months) => ({
     months:months
 });
 
+
+export const fetchAvgTempDerniereHeure = (parameter,echelle) => (dispatch) => {
+    var data = [];
+    var key;
+    return fetch(baseUrl+'parameter/'+parameter+'/'+echelle)  //fetch(baseUrl+'Temperature/perHour/7')
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(listOfJSON => {
+            
+            for (key in listOfJSON)
+            {
+                data.push(listOfJSON[key].avg);
+            }
+            dispatch(receivedAvgTempDerniereHeure(parseInt(data[0])));
+            console.log("AVG_TEMP_PER_DERNIERE_HEURE IS " + data)            
+        })
+        .catch(error => dispatch(requestTempFailed(error.message)));
+}
+
+
+export const receivedAvgTempDerniereHeure = (data) => ({
+    type: ActionTypes.RECEIVED_AVG_TEMP_DERNIERE_HEURE,
+    data: data
+});
+
+
+
+export const fetchAvgHumiditeDerniereHeure = (parameter,echelle) => (dispatch) => {
+    var data = [];
+    var key;
+    return fetch(baseUrl+'parameter/'+parameter+'/'+echelle)  //fetch(baseUrl+'Temperature/perHour/7')
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(listOfJSON => {
+            
+            for (key in listOfJSON)
+            {
+                data.push(listOfJSON[key].avg);
+            }
+            dispatch(receivedAvgHumiditeDerniereHeure(parseInt(data[0])));
+            console.log("RECEIVED_AVG_HUMIDITE_DERNIERE_HEURE IS " + data)            
+        })
+        .catch(error => dispatch(requestTempFailed(error.message)));
+}
+
+
+export const receivedAvgHumiditeDerniereHeure = (data) => ({
+    type: ActionTypes.RECEIVED_AVG_HUMIDITE_DERNIERE_HEURE,
+    data: data
+});
+
 export const requestTempFailed = (errmess) => ({
     type: ActionTypes.REQUEST_TEMP_FAILED,
     payload: errmess

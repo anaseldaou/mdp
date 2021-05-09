@@ -16,9 +16,19 @@ import '../CSS/About.css';
 import '../CSS/Dashboard.css';
 import '../CSS/SideNav.css';
 
-import {fetchAvgTempPerSemaine,fetchAvgTempAujourdhui,fetchAvgTempPerAnnee} from '../redux/TemperatureCreators';
+import {fetchAvgTempPerSemaine,fetchAvgTempAujourdhui,fetchAvgTempPerAnnee,fetchAvgTempDerniereHeure , fetchAvgHumiditeDerniereHeure} from '../redux/TemperatureCreators';
 import {fetchAvgPluvioPerSemaine,fetchAvgPluvioAujourdhui,fetchAvgPluvioPerAnnee} from '../redux/PluvioCreators';
-import {fetchAvgWindSpeedPerSemaine,fetchAvgWindSpeedPerMonth,fetchAvgWindSpeedPerAnnee} from '../redux/WindSpeedCreators';
+import {fetchAvgWindSpeedPerSemaine,fetchAvgWindSpeedPerMonth,fetchAvgWindSpeedPerAnnee , fetchAvgWindSpeedAujourdhui} from '../redux/WindSpeedCreators';
+import {
+fetchAvgCO2PerSemaine,
+fetchAvgSO2PerSemaine,
+fetchAvgSO2PerAnnee,
+fetchAvgCO2PerAnnee,
+fetchAvgPPMPerSemaine,
+fetchAvgPPMPerMois,
+fetchAvgPPMDernierHeure
+}
+from '../redux/GazCreators';
 
 const mapStateToProps = state => {
     return {
@@ -27,7 +37,8 @@ const mapStateToProps = state => {
       about_data:state.about_data,
       temperature:state.temperature,
       pluvio:state.pluvio,
-      wind:state.wind
+      wind:state.wind,
+      gaz:state.gaz
     }
 }
 
@@ -39,6 +50,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchAvgTempPerSemaine : (parameter,echelle) => dispatch(fetchAvgTempPerSemaine(parameter,echelle)),
   fetchAvgTempAujourdhui:(parameter,echelle) => dispatch(fetchAvgTempAujourdhui(parameter,echelle)),
   fetchAvgTempPerAnnee:(parameter,echelle) => dispatch(fetchAvgTempPerAnnee(parameter,echelle)),
+  fetchAvgTempDerniereHeure:(parameter,echelle) => dispatch(fetchAvgTempDerniereHeure(parameter,echelle)),
+  fetchAvgHumiditeDerniereHeure:(parameter,echelle) => dispatch(fetchAvgHumiditeDerniereHeure(parameter,echelle)),
 
   fetchAvgPluvioPerSemaine:(parameter,echelle) => dispatch(fetchAvgPluvioPerSemaine(parameter,echelle)),
   fetchAvgPluvioAujourdhui:(parameter,echelle) => dispatch(fetchAvgPluvioAujourdhui(parameter,echelle)),
@@ -46,7 +59,16 @@ const mapDispatchToProps = (dispatch) => ({
 
   fetchAvgWindSpeedPerSemaine:(parameter,echelle) => dispatch(fetchAvgWindSpeedPerSemaine(parameter,echelle)),
   fetchAvgWindSpeedPerMonth:(parameter,echelle) => dispatch(fetchAvgWindSpeedPerMonth(parameter,echelle)),
-  fetchAvgWindSpeedPerAnnee:(parameter,echelle) => dispatch(fetchAvgWindSpeedPerAnnee(parameter,echelle))
+  fetchAvgWindSpeedPerAnnee:(parameter,echelle) => dispatch(fetchAvgWindSpeedPerAnnee(parameter,echelle)),
+  fetchAvgWindSpeedAujourdhui:(parameter,echelle) => dispatch(fetchAvgWindSpeedAujourdhui(parameter,echelle)),
+
+  fetchAvgCO2PerSemaine:(parameter,echelle) => dispatch(fetchAvgCO2PerSemaine(parameter,echelle)),
+  fetchAvgSO2PerSemaine:(parameter,echelle) => dispatch(fetchAvgSO2PerSemaine(parameter,echelle)),
+  fetchAvgCO2PerAnnee:(parameter,echelle) => dispatch(fetchAvgCO2PerAnnee(parameter,echelle)),
+  fetchAvgSO2PerAnnee:(parameter,echelle) => dispatch(fetchAvgSO2PerAnnee(parameter,echelle)),
+  fetchAvgPPMPerSemaine:(parameter,echelle) => dispatch(fetchAvgPPMPerSemaine(parameter,echelle)),
+  fetchAvgPPMPerMois:(parameter,echelle) => dispatch(fetchAvgPPMPerMois(parameter,echelle)),
+  fetchAvgPPMDernierHeure:(parameter,echelle) => dispatch(fetchAvgPPMDernierHeure(parameter,echelle))
 });
 
 
@@ -63,6 +85,8 @@ class Main extends Component {
     this.props.fetchAvgTempPerSemaine("Temperature","perDay/7");
     this.props.fetchAvgTempAujourdhui("Temperature","perHour/24");
     this.props.fetchAvgTempPerAnnee("Temperature","perMonth/12");
+    this.props.fetchAvgTempDerniereHeure("Temperature","perHour/1");
+    this.props.fetchAvgHumiditeDerniereHeure("Humidity","perHour/1");
 
     //GET PLUVIO DATA
     this.props.fetchAvgPluvioPerSemaine("Pluvio","perDay/7");
@@ -73,6 +97,16 @@ class Main extends Component {
     this.props.fetchAvgWindSpeedPerSemaine("WindSpeed","perDay/7");
     this.props.fetchAvgWindSpeedPerMonth("WindSpeed","perDay/30");
     this.props.fetchAvgWindSpeedPerAnnee("WindSpeed","perMonth/7");
+    this.props.fetchAvgWindSpeedAujourdhui("WindSpeed","perDay/1");
+
+    //GET GAZ DATA
+    this.props.fetchAvgCO2PerSemaine("CO2","perDay/7");
+    this.props.fetchAvgSO2PerSemaine("SO2","perDay/7");
+    this.props.fetchAvgCO2PerAnnee("CO2","perMonth/12");
+    this.props.fetchAvgSO2PerAnnee("SO2","perMonth/12");
+    this.props.fetchAvgPPMPerSemaine("PPM","perWeek/1");
+    this.props.fetchAvgPPMPerMois("PPM","perMonth/1");
+    this.props.fetchAvgPPMDernierHeure("PPM","perHour/1")
   }
 
 
@@ -85,7 +119,7 @@ class Main extends Component {
         <Header auth={this.props.auth} loginUser={this.props.loginUser} logoutUser={this.props.logoutUser}/>
 
         <Switch>
-        <Route path="/home" component={() => <Home auth={this.props.auth} />} />
+        <Route path="/home" component={() => <Home auth={this.props.auth} temperature={this.props.temperature} wind={this.props.wind} pluvio={this.props.pluvio} gaz={this.props.gaz} />} />
         <Route exact path="/about" component={About}/>
         <Route exact path="/temperature" component={() => <Temperature TemperatureData_Semaine={this.props.temperature.TemperatureData_Semaine} 
                                                                         TemperatureData_Aujourdhui={this.props.temperature.TemperatureData_Aujourdhui}
@@ -96,7 +130,7 @@ class Main extends Component {
         <Route exact path="/rain" component={() => <Rain RainData_Semaine={this.props.pluvio.RainData_Semaine} 
                                                                         RainData_Aujourdhui={this.props.pluvio.RainData_Aujourdhui}
                                                                         RainData_Annee={this.props.pluvio.RainData_Annee}/>}/>
-        <Route exact path="/gaz" component={Gaz}/>
+        <Route exact path="/gaz" component={() => <Gaz gaz={this.props.gaz}/>}/>
         <Route exact path="/wind" component={() => <Wind WindData_Semaine={this.props.wind.WindData_Semaine} 
                                                                         WindData_Mois={this.props.wind.WindData_Mois}
                                                                         WindData_Annee={this.props.wind.WindData_Annee}/>}/>
@@ -114,7 +148,7 @@ class Main extends Component {
         <Header auth={this.props.auth} loginUser={this.props.loginUser} logoutUser={this.props.logoutUser} />
 
         <Switch>
-        <Route path="/home" component={() => <Home auth={this.props.auth} />} />
+        <Route path="/home" component={() => <Home auth={this.props.auth} temperature={this.props.temperature} wind={this.props.wind} pluvio={this.props.pluvio} gaz={this.props.gaz} />} />
         <Route exact path="/about" component={About}/>
         <Route exact path="/team" component={Team}/>
         <Redirect to="/home"/>

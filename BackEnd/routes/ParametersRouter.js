@@ -15,6 +15,7 @@ var PyranRouter = require('./PyranRouter.js');
 var CO2Router = require('./Co2Router.js');
 var SO2Router = require('./So2Router.js');
 var TemperatureRouter = require('./TemperatureRouter.js');
+var PPMRouter = require('./PPMRouter');
 
 const getWeek = (day) =>
 {
@@ -36,6 +37,7 @@ ParameterRouter.use('/PP10',PP10Router);
 ParameterRouter.use('/CO2',CO2Router);
 ParameterRouter.use('/So2',SO2Router);
 ParameterRouter.use('/Pyran',PyranRouter);
+ParameterRouter.use('/PPM',PPMRouter);
 /*
 ParameterRouter.route('/')
 .post((req, res, next) => {

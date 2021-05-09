@@ -128,6 +128,45 @@ export const receivedAvgWindSpeedPerAnnee = (data,months) => ({
     months:months
 });
 
+
+
+export const fetchAvgWindSpeedAujourdhui = (parameter,echelle) => (dispatch) => {
+    var data = [];
+    var key;
+    return fetch(baseUrl+'parameter/'+parameter+'/'+echelle)  //fetch(baseUrl+'WindSpeed/perHour/7')
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(listOfJSON => {
+            
+            for (key in listOfJSON)
+            {
+                data.push(listOfJSON[key].avg);
+            }
+            dispatch(receivedAvgWindSpeedAujourdhui(data[0])); //une seule valeure la liste
+            console.log("AVG_WindSpeed_AUJOURDHUI IS " + data)      
+        })
+        .catch(error => dispatch(requestWindSpeedFailed(error.message)));
+}
+
+
+export const receivedAvgWindSpeedAujourdhui = (data) => ({
+    type: ActionTypes.RECEIVED_AVG_WINDSPEED_AUJOURDHUI,
+    data: data
+});
+
 export const requestWindSpeedFailed = (errmess) => ({
     type: ActionTypes.REQUEST_WINDSPEED_FAILED,
     payload: errmess

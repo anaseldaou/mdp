@@ -34,7 +34,9 @@ export const Temperature = (state = {
                                         borderColor:"blue"
                                     }
                                 ]
-                              }
+                              },
+    Avg_Humidite_Derniere_heure : 0 ,
+    Avg_Temperature_Derniere_heure : 0
     
     }, action) => {
     switch(action.type) {
@@ -75,6 +77,12 @@ export const Temperature = (state = {
                 ]
               }
             }
+        case ActionTypes.RECEIVED_AVG_TEMP_DERNIERE_HEURE:
+                return {...state,Avg_Temperature_Derniere_heure : action.data
+                }
+        case ActionTypes.RECEIVED_AVG_HUMIDITE_DERNIERE_HEURE:
+                    return {...state,Avg_Humidite_Derniere_heure : action.data
+                    }
 
         default:
             return state;

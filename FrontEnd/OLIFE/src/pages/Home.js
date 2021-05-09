@@ -4,9 +4,9 @@ import TableCom from '../components/TableComponent';
 import KnobCom from '../components/KnobComponent';
 import FormDialog from '../components/DialogComponent';
 import '../CSS/Dashboard.css'
-import { Avg_Humidite_Aujourdui,Avg_Temperature_Aujourdui,TemperatureData_Aujourdhui ,TemperatureOptions_Aujourdhui} from '../mockData/TemperatureService';
-import {Avg_WindSpeed_Ajourdhui,WindData_Semaine, WindOptions_Semaine} from '../mockData/WindService';
-import {Avg_Rain_Aujourdhui,RainData_Aujourdhui,RainOptions_Aujourdhui} from '../mockData/RainService'
+import { Avg_Humidite_Derniere_heure,Avg_Temperature_Derniere_heure,TemperatureOptions_Aujourdhui} from '../mockData/TemperatureService';
+import {Avg_WindSpeed_Ajourdhui, WindOptions_Semaine} from '../mockData/WindService';
+import {Avg_Rain_Aujourdhui,RainOptions_Aujourdhui} from '../mockData/RainService'
 import {Data_Intensity} from '../mockData/IntensiteService'
 import SideNav from '../components/SideNavComponent'
 import { Button } from 'primereact/button'
@@ -25,8 +25,6 @@ class Home extends Component{
     }
     this.ToWhite = this.ToWhite.bind(this);
     this.ToBlack = this.ToBlack.bind(this);
-
-    console.log("first respone is " + Avg_Temperature_Aujourdui);
   }
 
   ToWhite() {
@@ -70,13 +68,13 @@ render(){
                 <br></br>
                 <div className="card-custom">
                   <h2 className="card-subtitle mb-2"><bold>Temperature</bold></h2>
-                  <h1 className="card-title">{Avg_Temperature_Aujourdui}°C &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/temperatureIcon.webp" width="25%"/></span></h1>
+                  <h1 className="card-title">{this.props.temperature.Avg_Temperature_Derniere_heure}°C &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/temperatureIcon.webp" width="25%"/></span></h1>
                 </div>
               </div>
               <div className="col-12">
                 <div className="card-custom">
                   <h2 className="card-subtitle mb-2"><bold>humidité</bold></h2>
-                  <h1 className="card-title">{Avg_Humidite_Aujourdui}% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/humidity-icon.png" width="25%"/></span></h1>
+                  <h1 className="card-title">{this.props.temperature.Avg_Humidite_Derniere_heure}% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><img src="assets/images/humidity-icon.png" width="25%"/></span></h1>
                 </div>
               </div>
             </div>
@@ -84,7 +82,7 @@ render(){
           <div class="col-md-9">
             <div className="card-custom">
               <h2 className="card-subtitle mb-2"><bold>Temperature Aujourd'hui en °C</bold></h2>
-              <Chart type="line" data={TemperatureData_Aujourdhui} options={TemperatureOptions_Aujourdhui}/>
+              <Chart type="line" data={this.props.temperature.TemperatureData_Aujourdhui} options={TemperatureOptions_Aujourdhui}/>
             </div>
           </div>
         </div>
@@ -94,9 +92,9 @@ render(){
           <div className="col-md-9">
               <div className="card-custom center">
                 <h2 className="card-subtitle mb-2"><bold>Vitesse du Vent cette semaine en Km/h</bold></h2>
-                <Chart type="line" data={WindData_Semaine} />
+                <Chart type="line" data={this.props.wind.WindData_Semaine} />
                 <br></br>
-                <h4><bold>Moyenne de la vitesse du vent Aujourd'hui en Km/h: {Avg_WindSpeed_Ajourdhui} km/h</bold></h4>
+                <h4><bold>Moyenne de la vitesse du vent Aujourd'hui en Km/h: {this.props.wind.Avg_WindSpeed_Ajourdhui} km/h</bold></h4>
               </div>
           </div>
 
@@ -109,7 +107,7 @@ render(){
           <div className="col-md-6">
             <div className="row">
               <div className="col-md-12">
-                <TableCom />
+                <TableCom gaz={this.props.gaz}/>
               </div>
               <div className="col-md-12">
                 <br></br>
@@ -126,7 +124,7 @@ render(){
                 <div className="card-custom">
                   <h2 className="card-subtitle mb-2 center"><bold>Pluie cumulée sur les dernières 24h</bold></h2>
                   <br></br>
-                  <Chart type="bar" data={RainData_Aujourdhui} />
+                  <Chart type="bar" data={this.props.pluvio.RainData_Aujourdhui} />
                   <br></br>
                   <h2> <bold>Pluis Cumule la derniere heure</bold></h2>
                   <h1>{Avg_Rain_Aujourdhui}ml <span><img src="assets/images/rain-icon.png" width="10%"/></span></h1>
