@@ -7,9 +7,9 @@ import Footer from '../components/FooterComponent';
 import Temperature from '../pages/Temperature';
 import Notes from '../pages/Notes';
 import Team from '../pages/Team';
-import Rain from '../pages/Rain'
-import Gaz from '../pages/Gaz'
-import Wind from '../pages/Wind'
+import Rain from '../pages/Rain';
+import Gaz from '../pages/Gaz';
+import Wind from '../pages/Wind';
 import { connect} from 'react-redux';
 import { loginUser, logoutUser} from '../redux/SignInCreators';
 import '../CSS/About.css';
@@ -70,6 +70,9 @@ const mapDispatchToProps = (dispatch) => ({
   fetchAvgPPMPerMois:(parameter,echelle) => dispatch(fetchAvgPPMPerMois(parameter,echelle)),
   fetchAvgPPMDernierHeure:(parameter,echelle) => dispatch(fetchAvgPPMDernierHeure(parameter,echelle))
 });
+
+
+
 
 
 
@@ -161,5 +164,4 @@ class Main extends Component {
     }
   }
 }
-
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

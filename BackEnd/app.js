@@ -74,6 +74,19 @@ const connect = mongoose.connect(url,connectionParams
 
 
 var app = express();
+
+//for HTTPS
+
+// app.all('*', (req, res, next) => {
+//   if (req.secure) {
+//     return next();
+//   }
+//   else {
+//     res.redirect(307, 'https://' + req.hostname + ':' + '3447' + req.url);
+//   }
+// });
+
+
 // view engine setup
 app.use(cors());
 app.set('views', path.join(__dirname, 'views'));

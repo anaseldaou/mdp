@@ -1,9 +1,11 @@
-import React,{Component} from 'react'
-import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem,
-    Form,FormGroup,
-Label , Input , Modal , ModalHeader , ModalBody } from 'reactstrap';
+import React, { Component } from 'react';
+import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem,
+    Button, Modal, ModalHeader, ModalBody,
+    Form, FormGroup, Input, Label } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import { Background } from 'victory';
+
+
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -31,17 +33,21 @@ class Header extends Component {
     }
 
     handleLogin(event) {
-        event.preventDefault();
         this.props.loginUser({username: this.username.value, password: this.password.value});
-        this.toggleModal();
-        if (this.props.auth.isAuthenticated == false)
-        {
-            this.toggleModal();
-        }
+        event.preventDefault();
+
     }
 
     handleLogout() {
         this.props.logoutUser();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot){
+        if (prevProps.auth.errorLogin==true && this.props.auth.errorLogin == false ) {
+            this.setState({
+                isModalOpen: false
+            });
+          }
     }
 
     render() {
@@ -97,10 +103,17 @@ class Header extends Component {
 
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
+                    
                     <ModalBody>
                         <Form onSubmit={this.handleLogin}>
+                            { this.props.auth.errorLogin ?
+                             <FormGroup>
+                                 <h4 style={{ color: 'red' }}>Invalid username or password</h4>
+                            </FormGroup>
+                            : null
+                            }
                             <FormGroup>
-                                <Label htmlFor="username">Username</Label>
+                                <Label htmlFor="username">UserName</Label>
                                 <Input type="text" id="username" name="username"
                                     innerRef={(input) => this.username = input} />
                             </FormGroup>
