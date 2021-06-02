@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/mdp-1/FrontEnd/OLIFE/static/css/main.664ba986.chunk.css",
-    "main.js": "/mdp-1/FrontEnd/OLIFE/static/js/main.095084fe.chunk.js",
-    "main.js.map": "/mdp-1/FrontEnd/OLIFE/static/js/main.095084fe.chunk.js.map",
-    "runtime-main.js": "/mdp-1/FrontEnd/OLIFE/static/js/runtime-main.ad718b79.js",
-    "runtime-main.js.map": "/mdp-1/FrontEnd/OLIFE/static/js/runtime-main.ad718b79.js.map",
-    "static/css/2.7b372850.chunk.css": "/mdp-1/FrontEnd/OLIFE/static/css/2.7b372850.chunk.css",
-    "static/js/2.4529bd47.chunk.js": "/mdp-1/FrontEnd/OLIFE/static/js/2.4529bd47.chunk.js",
-    "static/js/2.4529bd47.chunk.js.map": "/mdp-1/FrontEnd/OLIFE/static/js/2.4529bd47.chunk.js.map",
-    "index.html": "/mdp-1/FrontEnd/OLIFE/index.html",
-    "static/css/2.7b372850.chunk.css.map": "/mdp-1/FrontEnd/OLIFE/static/css/2.7b372850.chunk.css.map",
-    "static/css/main.664ba986.chunk.css.map": "/mdp-1/FrontEnd/OLIFE/static/css/main.664ba986.chunk.css.map",
-    "static/js/2.4529bd47.chunk.js.LICENSE.txt": "/mdp-1/FrontEnd/OLIFE/static/js/2.4529bd47.chunk.js.LICENSE.txt",
-    "static/media/primereact.css": "/mdp-1/FrontEnd/OLIFE/static/media/color.6441e63a.png",
-    "static/media/primeicons.css": "/mdp-1/FrontEnd/OLIFE/static/media/primeicons.e61f3495.woff"
+    "main.css": "/mdp-1/static/css/main.664ba986.chunk.css",
+    "main.js": "/mdp-1/static/js/main.3ed3e473.chunk.js",
+    "main.js.map": "/mdp-1/static/js/main.3ed3e473.chunk.js.map",
+    "runtime-main.js": "/mdp-1/static/js/runtime-main.03124563.js",
+    "runtime-main.js.map": "/mdp-1/static/js/runtime-main.03124563.js.map",
+    "static/css/2.13e90eb7.chunk.css": "/mdp-1/static/css/2.13e90eb7.chunk.css",
+    "static/js/2.f0491b7c.chunk.js": "/mdp-1/static/js/2.f0491b7c.chunk.js",
+    "static/js/2.f0491b7c.chunk.js.map": "/mdp-1/static/js/2.f0491b7c.chunk.js.map",
+    "index.html": "/mdp-1/index.html",
+    "static/css/2.13e90eb7.chunk.css.map": "/mdp-1/static/css/2.13e90eb7.chunk.css.map",
+    "static/css/main.664ba986.chunk.css.map": "/mdp-1/static/css/main.664ba986.chunk.css.map",
+    "static/js/2.f0491b7c.chunk.js.LICENSE.txt": "/mdp-1/static/js/2.f0491b7c.chunk.js.LICENSE.txt",
+    "static/media/primereact.css": "/mdp-1/static/media/color.6441e63a.png",
+    "static/media/primeicons.css": "/mdp-1/static/media/primeicons.e61f3495.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.ad718b79.js",
-    "static/css/2.7b372850.chunk.css",
-    "static/js/2.4529bd47.chunk.js",
+    "static/js/runtime-main.03124563.js",
+    "static/css/2.13e90eb7.chunk.css",
+    "static/js/2.f0491b7c.chunk.js",
     "static/css/main.664ba986.chunk.css",
-    "static/js/main.095084fe.chunk.js"
+    "static/js/main.3ed3e473.chunk.js"
   ]
 }
